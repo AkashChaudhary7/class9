@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Star Students - by Akash Chaudhary (PRO MAX)</title>
+<link rel="icon" href="data:," />
+<style>
+:root{
+  --bg: #f4f8ff; --card:#ffffff; --accent:#3466ff; --muted:#6b7f89; --gold:#ffb400;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#0b2a3a; transition:background .3s,color .3s}
+.app{max-width:1100px;margin:20px auto;padding:16px}
+header{background:linear-gradient(135deg,var(--accent),#1a49d8);color:white;padding:22px;border-radius:12px;text-align:center;box-shadow:0 8px 30px rgba(18,52,120,0.12);} 
+header h1{margin:0;font-size:22px;letter-spacing:0.4px}
+.header-meta{font-weight:600;opacity:0.95}
+.top-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:12px}
+.controls{display:flex;gap:8px;align-items:center}
+.btn{background:white;border:0;padding:8px 12px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--accent);box-shadow:0 6px 18px rgba(52,102,255,0.08)}
+.btn.primary{background:linear-gradient(90deg,#ffd54a,#ffb300);color:#1a1a1a}
+.nav{display:flex;gap:8px;justify-content:center;margin:16px 0}
+.nav .tab{padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,#ffffff,#eaf4ff);border:1px solid rgba(52,102,255,0.12);cursor:pointer;font-weight:700;color:var(--accent)}
+.nav .tab.active{background:var(--accent);color:white;box-shadow:0 8px 24px rgba(26,73,216,0.14)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.section{background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(18,52,120,0.04)}
+.section h2{margin:0 0 8px 0;color:var(--accent);font-size:18px}
+.student-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f0f7ff);border:1px solid rgba(52,102,255,0.06);cursor:pointer;transition:transform .18s,box-shadow .18s}
+.student-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(18,52,120,0.06)}
+.avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;flex:0 0 56px;border:3px solid rgba(52,102,255,0.12);display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eaf4ff,#e1f0ff);font-weight:800;color:var(--accent)}
+.smeta{display:flex;flex-direction:column}
+.sname{font-weight:800;color:#12385a}
+.snick{font-size:13px;color:var(--muted)}
+.stars{font-weight:900;color:var(--gold)}
+.small{font-size:13px;color:var(--muted)}
+.footer{margin-top:16px;text-align:center;color:var(--muted)}
+/* modal */
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;padding:18px;}
+.modal-card{width:100%;max-width:720px;background:white;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(2,6,23,0.3)}
+.modal-header{display:flex;justify-content:space-between;align-items:center}
+.modal-body{margin-top:12px}
+.icon-month{width:40px;height:40px;border-radius:10px;background:#f0fbff;display:inline-flex;align-items:center;justify-content:center;margin-right:10px}
+.month-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;background:#fbfdff;margin:6px 0}
+/* small responsive */
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.top-row{flex-direction:column;align-items:stretch}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.avatar{width:48px;height:48px}}
+/* subtle animated background stars (light) */
+.starry{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px);background-size:350px 350px;opacity:0.06}
+/* dark mode */
+body.dark{--bg:#071028;--card:#071428;color:#e6f3ff}
+body.dark header{background:linear-gradient(135deg,#0b2340,#0e3a7b)}
+body.dark .nav .tab{background:transparent;color:#a7c6ff;border:1px solid rgba(167,198,255,0.08)}
+body.dark .section{background:#071428}
+body.dark .student-card{background:linear-gradient(180deg,#08162b,#052036)}
+body.dark .avatar{background:linear-gradient(180deg,#06203a,#04213d);color:#a7c6ff}
+</style>
+</head>
+<body>
+<div class="starry" aria-hidden></div>
+<div class="app">
+  <header>
+    <div class="header-meta">⭐ Star Students</div>
+    <h1>by Akash Chaudhary</h1>
+    <div class="top-row">
+      <div class="controls">
+        <button class="btn" id="darkToggle">Toggle Dark</button>
+        <button class="btn" onclick="exportJSON()">Export JSON</button>
+      </div>
+      <div style="text-align:right">
+        <div class="small">Sync to GitHub (optional)</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="nav" role="tablist">
+    <div class="tab active" data-page="home">Home</div>
+    <div class="tab" data-page="dashboard">Student Dashboard</div>
+    <div class="tab" data-page="entry">Star Entry</div>
+    <div class="tab" data-page="reward">Chocolate Given</div>
+  </div>
+
+  <div id="pages">
+    <div id="home" class="page">
+      <div class="grid">
+        <div class="section">
+          <h2>Top Leaders (Overall)</h2>
+          <div id="topLeaders"></div>
+        </div>
+        <div class="section">
+          <h2>Scientist of the Month</h2>
+          <div id="monthTop"></div>
+        </div>
+        <div class="section">
+          <h2>Chocolate Candidates (7–9 ⭐)</h2>
+          <div id="chocoList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard" class="page" style="display:none;margin-top:12px">
+      <div class="section">
+        <h2>All Students</h2>
+        <div id="studentCards"></div>
+      </div>
+    </div>
+
+    <div id="entry" class="page" style="display:none;margin-top:12px">
+      <div class="section">
+        <h2>Give Stars</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="studentSelect" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff"></select>
+          <select id="starCount" style="width:110px;padding:12px;border-radius:10px;border:1px solid #dfefff"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          <button class="btn primary" onclick="giveStars()">Give</button>
+        </div>
+        <hr style="margin:14px 0">
+        <h3>Add Student</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="newName" placeholder="Name" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff">
+          <input id="newRoll" placeholder="Roll" style="width:120px;padding:12px;border-radius:10px;border:1px solid #dfefff">
+          <input id="newPhoto" type="file" accept="image/*">
+          <button class="btn" onclick="addStudentFromForm()">Add Student</button>
+        </div>
+        <div style="margin-top:12px">
+          <small class="small">GitHub Sync (optional): Owner, Repo, Path, Token saved locally only.</small>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <input id="ghOwner" placeholder="owner" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
+            <input id="ghRepo" placeholder="repo" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
+            <input id="ghPath" placeholder="data.json" value="data.json" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
+            <input id="ghToken" placeholder="token" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
+            <button class="btn" onclick="loadFromGitHub()">Load</button>
+            <button class="btn" onclick="syncToGitHub()">Sync</button>
+          </div>
+          <div id="syncMsg" class="small muted" style="margin-top:6px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="reward" class="page" style="display:none;margin-top:12px">
+      <div class="section">
+        <h2>Pending Chocolate Rewards</h2>
+        <div id="rewardList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Made by Akash Chaudhary</div>
+</div>
+
+<!-- Modal -->
+<div id="modal" style="display:none" class="modal" onclick="if(event.target.id==='modal') closeModal()">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div id="modalTitle"></div>
+      <div><button class="btn" onclick="closeModal()">Close</button></div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// Data + persistence
+const LS_KEY='star_students_v3';
+let state = { students: [], config: {} };
+let selectedIndex = null; // index in students array (preserved)
+
+function loadLocal(){ try{ const raw = localStorage.getItem(LS_KEY); if(raw) state = JSON.parse(raw); }catch(e){console.error(e);} }
+function saveLocal(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+loadLocal();
+
+function uid(){ return Math.random().toString(36).slice(2,9); }
+function getMonthKey(d=new Date()){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` }
+
+function ensureStudent(s){ s.id = s.id || uid(); s.name = s.name || 'Unnamed'; s.roll = s.roll || ''; s.photo = s.photo || null; s.totalStars = s.totalStars||0; s.currentRewardStars = s.currentRewardStars||0; s.monthly = s.monthly || {}; s.rewardStatus = s.rewardStatus===undefined? true: s.rewardStatus; s.nick = s.nick || genHindiNickname(s.name); }
+state.students.forEach(ensureStudent); saveLocal();
+
+// AI nickname
+function genHindiNickname(name){ if(!name) return 'तारों का दोस्त'; const seeds = ['उभरता हुआ वैज्ञानिक','तारों का खिलाड़ी','ज्ञान योद्धा','सुपर लर्नर','मेधा प्रतीभा','छोटा प्रोफेसर','नव-खोजी','टैलेंटेड स्टार']; let sum=0; for(let i=0;i<name.length;i++) sum+=name.charCodeAt(i); return seeds[sum % seeds.length]; }
+
+// Navigation
+const tabs = document.querySelectorAll('.nav .tab'); tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); showPage(t.dataset.page); }));
+function showPage(page){ document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none'); document.getElementById(page).style.display='block'; refreshAll(); }
+
+// UI builders
+function buildStudentCardHTML(s, idx){ return `<div class="student-card" data-idx="${idx}" onclick="openProfileByIdx(${idx})">
+  <div class="avatar">${s.photo?`<img src='${s.photo}' style='width:56px;height:56px;object-fit:cover;border-radius:50%'>`:`${(s.name||'')[0]||'S'}`}</div>
+  <div class="smeta"><div class="sname">${s.name}</div><div class="snick">${s.nick} • Roll ${s.roll||'-'}</div></div>
+  <div class="stars">${s.totalStars} ⭐</div>
+</div>` }
+
+function refreshAll(){
+  // student select preservation
+  const sel = document.getElementById('studentSelect'); const prev = (selectedIndex!==null?selectedIndex:sel.value);
+  sel.innerHTML = state.students.map((s,i)=>`<option value="${i}">${s.name} (Roll ${s.roll||i+1})</option>`).join('') || '<option value="">-- no students --</option>';
+  if(prev!==null && prev!=='' && !isNaN(prev) && prev < state.students.length) { sel.value = prev; selectedIndex = prev; }
+
+  // Dashboard cards
+  document.getElementById('studentCards').innerHTML = state.students.map((s,i)=>buildStudentCardHTML(s,i)).join('') || '<div class="small">No students yet</div>';
+
+  // Top Leaders overall
+  const top = [...state.students].sort((a,b)=>b.totalStars - a.totalStars).slice(0,5);
+  document.getElementById('topLeaders').innerHTML = top.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.totalStars} ⭐</div></div>`).join('') || '<div class="small">No data</div>';
+
+  // Month Top (scientist)
+  const mk = getMonthKey();
+  const monthTop = [...state.students].sort((a,b)=> (b.monthly[mk]||0) - (a.monthly[mk]||0)).slice(0,5);
+  document.getElementById('monthTop').innerHTML = monthTop.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.monthly[mk]||0} ⭐</div></div>`).join('') || '<div class="small">No data</div>';
+
+  // Chocolate candidates currentRewardStars 7-9 and rewardStatus true
+  const choco = state.students.filter(s=> (s.currentRewardStars >=7 && s.currentRewardStars < 10) && s.rewardStatus===true);
+  document.getElementById('chocoList').innerHTML = choco.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.currentRewardStars} ⭐</div></div>`).join('') || '<div class="small">No candidates yet</div>';
+
+  // Reward list: those with currentRewardStars >=10 and rewardStatus false
+  const rewards = state.students.filter(s=> s.currentRewardStars >=10 && s.rewardStatus===false);
+  document.getElementById('rewardList').innerHTML = rewards.map(s=>{
+    const need = 10 - (s.currentRewardStars % 10);
+    return `<div class='student-card'><div class='avatar'>${s.photo?`<img src='${s.photo}' style='width:56px;height:56px;object-fit:cover;border-radius:50%'>`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div style='display:flex;flex-direction:column;gap:6px;align-items:flex-end'><div class='small'>Cycle need: ${need}</div><button class='btn' onclick='markChocolateGiven("${s.id}")'>Mark Given</button></div></div>`
+  }).join('') || '<div class="small">No pending rewards</div>';
+}
+
+// Add student
+function addStudentFromForm(){ const name=document.getElementById('newName').value.trim(); const roll=document.getElementById('newRoll').value.trim(); const file=document.getElementById('newPhoto').files[0]; if(!name||!roll) return alert('Enter name and roll');
+  const s = { id: uid(), name, roll, totalStars:0, currentRewardStars:0, monthly:{}, rewardStatus:true };
+  s.nick = genHindiNickname(s.name);
+  if(file){ const reader=new FileReader(); reader.onload=()=>{ s.photo = reader.result; state.students.push(s); saveLocal(); clearAddForm(); refreshAll(); navTo('entry'); }; reader.readAsDataURL(file); } else { state.students.push(s); saveLocal(); clearAddForm(); refreshAll(); navTo('entry'); }
+}
+function clearAddForm(){ document.getElementById('newName').value=''; document.getElementById('newRoll').value=''; document.getElementById('newPhoto').value=''; }
+
+// Give stars (preserve selection)
+function giveStars(){ const sel=document.getElementById('studentSelect'); if(!sel) return; const idxStr = sel.value; if(idxStr==='') return alert('Choose a student'); const idx = parseInt(idxStr,10); selectedIndex = idx; const count = parseInt(document.getElementById('starCount').value,10) || 0; const s = state.students[idx]; if(!s) return alert('Student not found'); s.totalStars += count; s.currentRewardStars += count; const mk = getMonthKey(); s.monthly[mk] = (s.monthly[mk]||0) + count; if(s.currentRewardStars >= 10) s.rewardStatus = false; saveLocal(); refreshAll(); }
+
+// mark chocolate given (Option A)
+function markChocolateGiven(id){ const s = state.students.find(x=>x.id===id); if(!s) return; s.currentRewardStars = 0; s.rewardStatus = true; saveLocal(); refreshAll(); }
+
+// Open profile modal
+function openProfileByIdx(i){ const s = state.students[i]; if(!s) return; openProfile(s); }
+function openProfileById(id){ const s = state.students.find(x=>x.id===id); if(!s) return; openProfile(s); }
+function openProfile(s){ ensureStudent(s); const modal=document.getElementById('modal'); document.getElementById('modalTitle').innerText = s.name + ' • Profile';
+  const mk = getMonthKey();
+  let html = `<div style='display:flex;gap:14px;align-items:center;flex-wrap:wrap'><div style='width:120px'>${s.photo?`<img src="${s.photo}" style="width:120px;height:120px;border-radius:12px;object-fit:cover">`:`<div style="width:120px;height:120px;border-radius:12px;background:#eef8ff;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:36px">${s.name[0]||'S'}</div>`}</div><div style='flex:1'><h2 style='margin:0'>${s.name}</h2><div class='small' style='margin-top:6px'>${s.nick}</div><div style='margin-top:8px'><b>Total Stars:</b> ${s.totalStars} ⭐</div><div><b>This Month:</b> ${s.monthly[mk]||0} ⭐</div><div><b>Current Cycle:</b> ${s.currentRewardStars} / 10 ⭐</div><div style='margin-top:8px'><button class='btn' onclick='markChocolateGiven("${s.id}")'>Chocolate Given</button></div></div></div>`;
+  // monthly breakdown
+  html += '<hr style="margin:12px 0"><h3>Monthly Breakdown</h3>';
+  const months = Object.keys(s.monthly).sort().reverse(); if(months.length===0) html += '<div class="small">No monthly data yet</div>'; else{ html += months.map(m=>{ const nm = monthLabel(m); return `<div class='month-row'><div class='icon-month'>${nm.icon}</div><div><b>${nm.label}</b><div class='small'>${s.monthly[m]} ⭐</div></div></div>` }).join(''); }
+  // badges
+  const isScientist = isInMonthTop(s.id);
+  html += `<hr style="margin:12px 0"><div style='display:flex;gap:8px;align-items:center'>${isScientist?'<div style="background:#e8f3ff;padding:8px;border-radius:8px;font-weight:700;color:var(--accent)">🔭 Scientist of the Month</div>':''}<div style="background:#fff6e6;padding:8px;border-radius:8px;font-weight:700;color:#7a5300">📜 Certificate</div></div>`;
+  document.getElementById('modalBody').innerHTML = html; modal.style.display='flex'; }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+
+function monthLabel(ym){ const [y,m]=ym.split('-'); const mm=parseInt(m,10); const icons=['📘','📗','📕','🌸','🌞','🎓','🎆','🌻','🍁','🎃','🦃','🎄']; const names=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return { icon: icons[mm-1], label:`${names[mm-1]} ${y}` } }
+function isInMonthTop(id){ const mk=getMonthKey(); const arr=[...state.students].sort((a,b)=> (b.monthly[mk]||0) - (a.monthly[mk]||0)).slice(0,5); return arr.some(x=>x.id===id); }
+
+// GitHub sync (same as before but fixed regex)
+async function loadFromGitHub(){ const owner=document.getElementById('ghOwner').value.trim(); const repo=document.getElementById('ghRepo').value.trim(); const path=document.getElementById('ghPath').value.trim()||'data.json'; const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('Enter owner, repo and token'); state.config = { ghOwner:owner, ghRepo:repo, ghPath:path, ghToken:token }; saveLocal(); const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`; document.getElementById('syncMsg').innerText='Loading from GitHub...'; try{ const res = await fetch(url, { headers: { Authorization: 'token '+token } }); if(!res.ok) throw new Error('Fetch failed: '+res.status); const data = await res.json(); const content = atob((data.content||'').replace(/\n/g,'')); const parsed = JSON.parse(content||'{}'); state.students = parsed.students||state.students; state.config = parsed.config||state.config; state.students.forEach(ensureStudent); saveLocal(); refreshAll(); document.getElementById('syncMsg').innerText='Loaded from GitHub.'; }catch(e){ document.getElementById('syncMsg').innerText='Load failed: '+e.message; console.error(e); } }
+
+async function syncToGitHub(){ const owner=document.getElementById('ghOwner').value.trim(); const repo=document.getElementById('ghRepo').value.trim(); const path=document.getElementById('ghPath').value.trim()||'data.json'; const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('Enter GitHub config'); const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`; document.getElementById('syncMsg').innerText='Syncing to GitHub...'; const payload = { students: state.students, config:{ ghOwner:owner, ghRepo:repo, ghPath:path } }; const content = btoa(JSON.stringify(payload,null,2)); try{ const getRes = await fetch(url, { headers:{ Authorization: 'token '+token }}); let sha=null; if(getRes.ok){ const js = await getRes.json(); sha = js.sha; } const putRes = await fetch(url, { method:'PUT', headers:{ Authorization: 'token '+token, 'Content-Type':'application/json' }, body: JSON.stringify({ message:'Update data.json from Star Students app', content, sha }) }); if(!putRes.ok) throw new Error('Sync failed: '+putRes.status); const jr = await putRes.json(); state.config={ ghOwner:owner, ghRepo:repo, ghPath:path, ghToken:token }; saveLocal(); document.getElementById('syncMsg').innerText='Synced to GitHub.'; }catch(e){ document.getElementById('syncMsg').innerText='Sync failed: '+e.message; console.error(e); } }
+function navTo(p){ document.querySelectorAll('.nav .tab').forEach(t=>{ t.classList.toggle('active', t.dataset.page===p); }); showPage(p); }
+
+// export
+function exportJSON(){ const data=JSON.stringify({ students: state.students, config: state.config }, null, 2); const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='star-students-data.json'; a.click(); URL.revokeObjectURL(url); }
+
+// dark toggle
+document.getElementById('darkToggle').addEventListener('click', ()=>{ document.body.classList.toggle('dark'); });
+
+// init small sample if empty
+if(state.students.length===0){ /* start with an empty list intentionally */ saveLocal(); }
+
+refreshAll();
+
+</script>
+</body>
+</html>
