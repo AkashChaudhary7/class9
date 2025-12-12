@@ -3,146 +3,80 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Star Students - by Akash Chaudhary (PRO MAX)</title>
+<title>Star Students - PRO MAX</title>
 <link rel="icon" href="data:," />
 <style>
-:root{
-  --bg: #f4f8ff; --card:#ffffff; --accent:#3466ff; --muted:#6b7f89; --gold:#ffb400;
-}
-*{box-sizing:border-box}
-body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#0b2a3a; transition:background .3s,color .3s}
-.app{max-width:1100px;margin:20px auto;padding:16px}
-header{background:linear-gradient(135deg,var(--accent),#1a49d8);color:white;padding:22px;border-radius:12px;text-align:center;box-shadow:0 8px 30px rgba(18,52,120,0.12);} 
-header h1{margin:0;font-size:22px;letter-spacing:0.4px}
-.header-meta{font-weight:600;opacity:0.95}
-.top-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:12px}
-.controls{display:flex;gap:8px;align-items:center}
-.btn{background:white;border:0;padding:8px 12px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--accent);box-shadow:0 6px 18px rgba(52,102,255,0.08)}
-.btn.primary{background:linear-gradient(90deg,#ffd54a,#ffb300);color:#1a1a1a}
-.nav{display:flex;gap:8px;justify-content:center;margin:16px 0}
-.nav .tab{padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,#ffffff,#eaf4ff);border:1px solid rgba(52,102,255,0.12);cursor:pointer;font-weight:700;color:var(--accent)}
-.nav .tab.active{background:var(--accent);color:white;box-shadow:0 8px 24px rgba(26,73,216,0.14)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.section{background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(18,52,120,0.04)}
-.section h2{margin:0 0 8px 0;color:var(--accent);font-size:18px}
-.student-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f0f7ff);border:1px solid rgba(52,102,255,0.06);cursor:pointer;transition:transform .18s,box-shadow .18s}
-.student-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(18,52,120,0.06)}
-.avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;flex:0 0 56px;border:3px solid rgba(52,102,255,0.12);display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eaf4ff,#e1f0ff);font-weight:800;color:var(--accent)}
-.smeta{display:flex;flex-direction:column}
-.sname{font-weight:800;color:#12385a}
-.snick{font-size:13px;color:var(--muted)}
-.stars{font-weight:900;color:var(--gold)}
-.small{font-size:13px;color:var(--muted)}
-.footer{margin-top:16px;text-align:center;color:var(--muted)}
-/* modal */
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;padding:18px;z-index:999;}
-.modal-card{width:100%;max-width:720px;background:white;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(2,6,23,0.3)}
-.modal-header{display:flex;justify-content:space-between;align-items:center}
-.modal-body{margin-top:12px}
-.icon-month{width:40px;height:40px;border-radius:10px;background:#f0fbff;display:inline-flex;align-items:center;justify-content:center;margin-right:10px}
-.month-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;background:#fbfdff;margin:6px 0}
-/* small responsive */
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.top-row{flex-direction:column;align-items:stretch}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.avatar{width:48px;height:48px}}
-/* subtle animated background stars (light) */
-.starry{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px);background-size:350px 350px;opacity:0.06}
-/* dark mode */
-body.dark{--bg:#071028;--card:#071428;color:#e6f3ff}
-body.dark header{background:linear-gradient(135deg,#0b2340,#0e3a7b)}
-body.dark .nav .tab{background:transparent;color:#a7c6ff;border:1px solid rgba(167,198,255,0.08)}
-body.dark .section{background:#071428}
-body.dark .student-card{background:linear-gradient(180deg,#08162b,#052036)}
-body.dark .avatar{background:linear-gradient(180deg,#06203a,#04213d);color:#a7c6ff}
+  :root {
+    --bg:#f4f8ff; --card:#ffffff; --accent:#3466ff; --muted:#6b7f89; --gold:#ffb400;
+  }
+  body { margin:0; font-family:Inter, sans-serif; background:var(--bg); color:#0b2a3a; transition:0.3s; }
+  .app { max-width:1100px; margin:20px auto; padding:16px; }
+  header { background:linear-gradient(135deg,var(--accent),#1a49d8); color:white; padding:22px; border-radius:12px; text-align:center; }
+  header h1 { margin:0; font-size:22px; }
+  .nav { display:flex; gap:8px; justify-content:center; margin:16px 0; }
+  .nav .tab { padding:10px 16px; border-radius:999px; background:#eaf4ff; cursor:pointer; font-weight:700; color:var(--accent); }
+  .nav .tab.active { background:var(--accent); color:white; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .section { background:var(--card); padding:14px; border-radius:14px; box-shadow:0 8px 30px rgba(18,52,120,0.04); }
+  .student-card { display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px; background:#f0f7ff; cursor:pointer; transition:0.2s; }
+  .student-card:hover { transform:translateY(-3px); box-shadow:0 6px 18px rgba(52,102,255,0.1); }
+  .avatar { width:56px; height:56px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--accent); background:linear-gradient(180deg,#eaf4ff,#e1f0ff); }
+  .smeta { display:flex; flex-direction:column; }
+  .sname { font-weight:800; color:#12385a; }
+  .snick { font-size:13px; color:var(--muted); }
+  .stars { font-weight:900; color:var(--gold); }
+  .footer { text-align:center; margin-top:20px; color:var(--muted); }
 </style>
 </head>
 <body>
-<div class="starry" aria-hidden></div>
 <div class="app">
   <header>
-    <div class="header-meta">⭐ Star Students</div>
+    <div>⭐ Star Students</div>
     <h1>by Akash Chaudhary</h1>
-    <div class="top-row">
-      <div class="controls">
-        <button class="btn" id="darkToggle">Toggle Dark</button>
-        <button class="btn" onclick="exportJSON()">Export JSON</button>
-      </div>
-      <div style="text-align:right">
-        <div class="small">Sync to GitHub (optional)</div>
-      </div>
-    </div>
   </header>
 
-  <div class="nav" role="tablist">
+  <!-- Navigation -->
+  <div class="nav">
     <div class="tab active" data-page="home">Home</div>
-    <div class="tab" data-page="dashboard">Student Dashboard</div>
+    <div class="tab" data-page="dashboard">Dashboard</div>
     <div class="tab" data-page="entry">Star Entry</div>
-    <div class="tab" data-page="reward">Chocolate Given</div>
   </div>
 
+  <!-- Pages -->
   <div id="pages">
-    <!-- HOME PAGE -->
+    <!-- Home -->
     <div id="home" class="page">
       <div class="grid">
         <div class="section">
-          <h2>Top Leaders (Overall)</h2>
+          <h2>Top Leaders</h2>
           <div id="topLeaders"></div>
-        </div>
-        <div class="section">
-          <h2>Scientist of the Month</h2>
-          <div id="monthTop"></div>
-        </div>
-        <div class="section">
-          <h2>Chocolate Candidates (7–9 ⭐)</h2>
-          <div id="chocoList"></div>
         </div>
       </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="page" style="display:none;margin-top:12px">
+    <!-- Dashboard -->
+    <div id="dashboard" class="page" style="display:none;">
       <div class="section">
         <h2>All Students</h2>
         <div id="studentCards"></div>
       </div>
     </div>
 
-    <!-- STAR ENTRY -->
-    <div id="entry" class="page" style="display:none;margin-top:12px">
+    <!-- Star Entry -->
+    <div id="entry" class="page" style="display:none;">
       <div class="section">
         <h2>Give Stars</h2>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select id="studentSelect" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff"></select>
-          <select id="starCount" style="width:110px;padding:12px;border-radius:10px;border:1px solid #dfefff"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-          <button class="btn primary" onclick="giveStars()">Give</button>
-        </div>
-        <hr style="margin:14px 0">
-        <h3>Add Student</h3>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="newName" placeholder="Name" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff">
-          <input id="newRoll" placeholder="Roll" style="width:120px;padding:12px;border-radius:10px;border:1px solid #dfefff">
-          <input id="newPhoto" type="file" accept="image/*">
-          <button class="btn" onclick="addStudentFromForm()">Add Student</button>
-        </div>
-        <div style="margin-top:12px">
-          <small class="small">GitHub Sync (optional): Owner, Repo, Path, Token saved locally only.</small>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <input id="ghOwner" placeholder="owner" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghRepo" placeholder="repo" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghPath" placeholder="data.json" value="data.json" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghToken" placeholder="token" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <button class="btn" onclick="loadFromGitHub()">Load</button>
-            <button class="btn" onclick="syncToGitHub()">Sync</button>
-          </div>
-          <div id="syncMsg" class="small muted" style="margin-top:6px"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REWARD -->
-    <div id="reward" class="page" style="display:none;margin-top:12px">
-      <div class="section">
-        <h2>Pending Chocolate Rewards</h2>
-        <div id="rewardList"></div>
+        <select id="studentSelect"></select>
+        <select id="starCount"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        <button onclick="giveStars()">Give Stars</button>
+        <hr>
+        <h3>Add / Edit Student</h3>
+        <input id="newName" placeholder="Name">
+        <input id="newRoll" placeholder="Roll">
+        <input id="newDOB" type="date" placeholder="DOB">
+        <input id="newPhoto" type="file" accept="image/*">
+        <button onclick="addOrEditStudent()">Add / Edit</button>
+        <button onclick="removeStudent()">Remove Selected</button>
       </div>
     </div>
   </div>
@@ -150,233 +84,123 @@ body.dark .avatar{background:linear-gradient(180deg,#06203a,#04213d);color:#a7c6
   <div class="footer">Made by Akash Chaudhary</div>
 </div>
 
-<!-- PROFILE MODAL -->
-<div id="modal" style="display:none" class="modal" onclick="if(event.target.id==='modal') closeModal()">
-  <div class="modal-card" role="dialog" aria-modal="true">
-    <div class="modal-header">
-      <div id="modalTitle"></div>
-      <div><button class="btn" onclick="closeModal()">Close</button></div>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
-</div>
-
-<!-- TEACHER LOGIN MODAL -->
-<div id="loginModal" style="display:none" class="modal" onclick="if(event.target.id==='loginModal') closeLoginModal()">
-  <div class="modal-card">
-    <div class="modal-header">
-      <div>Teacher Login</div>
-      <div><button class="btn" onclick="closeLoginModal()">Close</button></div>
-    </div>
-    <div class="modal-body">
-      <input type="password" id="teacherPassword" placeholder="Enter Password" style="width:100%;padding:12px;border-radius:8px;border:1px solid #dfefff">
-      <button class="btn primary" style="margin-top:12px" onclick="checkLogin()">Login</button>
-    </div>
-  </div>
-</div>
-
 <script>
-/* --- STATE + LOCAL STORAGE --- */
-const LS_KEY='star_students_v4';
-let state = { students: [], config: {} };
-let selectedIndex = null;
-let isTeacherLoggedIn = false;
-const TEACHER_PASSWORD = 'akash123'; // change as needed
+/* ------------------ STATE ------------------ */
+const LS_KEY = 'star_students_v4';
+let state = { students: [], selectedIdx: null };
+loadState();
 
-function loadLocal(){ try{ const raw = localStorage.getItem(LS_KEY); if(raw) state = JSON.parse(raw); }catch(e){console.error(e);} }
-function saveLocal(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
-loadLocal();
+function loadState(){ 
+  try { 
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) state = JSON.parse(raw);
+  } catch(e){ console.error(e); }
+}
 
+function saveState(){ 
+  localStorage.setItem(LS_KEY, JSON.stringify(state)); 
+}
+
+/* ------------------ NAVIGATION ------------------ */
+document.querySelectorAll('.nav .tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    showPage(t.dataset.page);
+  });
+});
+function showPage(page){
+  document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none');
+  document.getElementById(page).style.display='block';
+  refreshAll();
+}
+
+/* ------------------ STUDENT HELPERS ------------------ */
 function uid(){ return Math.random().toString(36).slice(2,9); }
-function getMonthKey(d=new Date()){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` }
-
-function ensureStudent(s){ 
-  s.id = s.id || uid(); s.name = s.name || 'Unnamed'; s.roll = s.roll || ''; s.photo = s.photo || null; 
-  s.totalStars = s.totalStars||0; s.currentRewardStars = s.currentRewardStars||0; s.monthly = s.monthly || {}; 
-  s.rewardStatus = s.rewardStatus===undefined? true: s.rewardStatus; s.nick = s.nick || genHindiNickname(s.name); 
+function ensureStudent(s){
+  s.id = s.id || uid();
+  s.name = s.name || 'Unnamed';
+  s.roll = s.roll || '';
+  s.dob = s.dob || null;
+  s.photo = s.photo || null;
+  s.totalStars = s.totalStars || 0;
 }
-state.students.forEach(ensureStudent); saveLocal();
 
-/* --- AI NICKNAME --- */
-function genHindiNickname(name){ if(!name) return 'तारों का दोस्त'; 
-const seeds = ['उभरता हुआ वैज्ञानिक','तारों का खिलाड़ी','ज्ञान योद्धा','सुपर लर्नर','मेधा प्रतीभा','छोटा प्रोफेसर','नव-खोजी','टैलेंटेड स्टार']; 
-let sum=0; for(let i=0;i<name.length;i++) sum+=name.charCodeAt(i); 
-return seeds[sum % seeds.length]; }
-
-/* --- TEACHER LOGIN --- */
-function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
-function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
-function checkLogin() {
-  const pwd = document.getElementById('teacherPassword').value;
-  if(pwd === TEACHER_PASSWORD){
-    isTeacherLoggedIn = true; closeLoginModal();
-    alert('Login successful! You can now access Star Entry.');
-    document.querySelector('.tab[data-page="entry"]').style.display = 'inline-flex';
-  } else alert('Wrong password!');
-}
-document.querySelector('.tab[data-page="entry"]').style.display = 'none';
-
-/* --- NAVIGATION --- */
-const tabs = document.querySelectorAll('.nav .tab'); 
-tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); showPage(t.dataset.page); }));
-function showPage(page){ document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none'); document.getElementById(page).style.display='block'; refreshAll(); }
-
-/* --- BUILD CARDS --- */
-function buildStudentCardHTML(s, idx){ 
-return `<div class="student-card" data-idx="${idx}" onclick="openProfileByIdx(${idx})">
-  <div class="avatar">${s.photo?`<img src='${s.photo}' style='width:56px;height:56px;object-fit:cover;border-radius:50%'>`:`${(s.name||'')[0]||'S'}`}</div>
-  <div class="smeta"><div class="sname">${s.name}</div><div class="snick">${s.nick} • Roll ${s.roll||'-'}</div></div>
-  <div class="stars">${s.totalStars} ⭐</div>
-</div>` }
-
+/* ------------------ REFRESH UI ------------------ */
 function refreshAll(){
-  const sel = document.getElementById('studentSelect'); const prev = (selectedIndex!==null?selectedIndex:sel.value);
-  sel.innerHTML = state.students.map((s,i)=>`<option value="${i}">${s.name} (Roll ${s.roll||i+1})</option>`).join('') || '<option value="">-- no students --</option>';
-  if(prev!==null && prev!=='' && !isNaN(prev) && prev < state.students.length) { sel.value = prev; selectedIndex = prev; }
-  document.getElementById('studentCards').innerHTML = state.students.map((s,i)=>buildStudentCardHTML(s,i)).join('') || '<div class="small">No students yet</div>';
-
-  const top = [...state.students].sort((a,b)=>b.totalStars - a.totalStars).slice(0,5);
-  document.getElementById('topLeaders').innerHTML = top.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.totalStars} ⭐</div></div>`).join('') || '<div class="small">No data</div>';
-
-  const mk = getMonthKey();
-  const monthTop = [...state.students].sort((a,b)=> (b.monthly[mk]||0) - (a.monthly[mk]||0)).slice(0,5);
-  document.getElementById('monthTop').innerHTML = monthTop.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='small'>${s.monthly[mk]||0} ⭐ this month</div></div></div>`).join('') || '<div class="small">No data</div>';
-
-  const choco = state.students.filter(s=>(s.currentRewardStars||0)>=7);
-  document.getElementById('chocoList').innerHTML = choco.map(s=>`<div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?`<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">`:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='small'>${s.currentRewardStars} ⭐</div></div></div>`).join('') || '<div class="small">No students</div>';
-
-  document.getElementById('rewardList').innerHTML = choco.map(s=>`<div class="student-card"><div class='smeta'><div class="sname">${s.name}</div><div class="small">${s.currentRewardStars} ⭐</div><button class="btn" onclick='markReward("${s.id}")'>Given</button></div></div>`).join('') || '<div class="small">None</div>';
-}
-refreshAll();
-
-/* --- STAR ENTRY --- */
-function giveStars(){
-  const idx = parseInt(document.getElementById('studentSelect').value);
-  const stars = parseInt(document.getElementById('starCount').value);
-  if(isNaN(idx) || !state.students[idx] || stars===0) return;
-  const s = state.students[idx];
-  s.totalStars += stars; s.currentRewardStars += stars;
-  const mk = getMonthKey();
-  s.monthly[mk] = (s.monthly[mk]||0)+stars;
-  saveLocal(); refreshAll();
+  // student select
+  const sel = document.getElementById('studentSelect');
+  sel.innerHTML = state.students.map((s,i)=>`<option value="${i}">${s.name} (Roll ${s.roll})</option>`).join('');
+  
+  // dashboard
+  document.getElementById('studentCards').innerHTML = state.students.map((s,i)=>`
+    <div class="student-card" onclick="state.selectedIdx=${i}; refreshAll()">
+      <div class="avatar">${s.photo ? `<img src="${s.photo}" style="width:56px;height:56px;border-radius:50%">` : s.name[0]}</div>
+      <div class="smeta">
+        <div class="sname">${s.name}</div>
+        <div class="snick">Roll: ${s.roll}</div>
+        ${s.dob ? `<div class="small">Age: ${calculateAge(s.dob)}</div>` : ''}
+      </div>
+      <div class="stars">${s.totalStars} ⭐</div>
+    </div>
+  `).join('');
 }
 
-/* --- ADD STUDENT --- */
-function addStudentFromForm(){
+/* ------------------ AGE CALCULATION ------------------ */
+function calculateAge(dob){
+  const birth = new Date(dob);
+  const now = new Date();
+  const diff = now - birth;
+  const years = Math.floor(diff / (1000*60*60*24*365.25));
+  const months = Math.floor((diff / (1000*60*60*24*30.44)) % 12);
+  const days = Math.floor((diff / (1000*60*60*24)) % 30);
+  const seconds = Math.floor(diff / 1000 % 60);
+  return `${years}y, ${months}m, ${days}d, ${seconds}s`;
+}
+setInterval(refreshAll,1000); // live age countdown
+
+/* ------------------ STUDENT CRUD ------------------ */
+function addOrEditStudent(){
   const name = document.getElementById('newName').value.trim();
   const roll = document.getElementById('newRoll').value.trim();
-  const fileInput = document.getElementById('newPhoto');
-  if(!name) return alert('Name required');
-  const s = {id:uid(), name, roll, totalStars:0,currentRewardStars:0, monthly:{}, rewardStatus:true, nick:genHindiNickname(name)};
-  if(fileInput.files[0]){
-    const reader = new FileReader();
-    reader.onload = ()=>{ s.photo = reader.result; state.students.push(s); saveLocal(); refreshAll(); fileInput.value=''; }
-    reader.readAsDataURL(fileInput.files[0]);
-  } else { state.students.push(s); saveLocal(); refreshAll(); }
-  document.getElementById('newName').value=''; document.getElementById('newRoll').value='';
-}
-
-/* --- PROFILE MODAL --- */
-function closeModal(){ document.getElementById('modal').style.display='none'; }
-function openProfileByIdx(idx){ if(!state.students[idx]) return; openProfile(state.students[idx]); }
-function openProfileById(id){ const s = state.students.find(x=>x.id===id); if(s) openProfile(s); }
-
-function openProfile(s){
-  ensureStudent(s);
-  const modal=document.getElementById('modal');
-  document.getElementById('modalTitle').innerText = s.name + ' • Profile';
-  const html = `
-    <div style='display:flex;gap:14px;align-items:center;flex-wrap:wrap'>
-      <div style='width:120px'>
-        ${s.photo?`<img src="${s.photo}" style="width:120px;height:120px;border-radius:12px;object-fit:cover">`:
-          `<div style="width:120px;height:120px;border-radius:12px;background:#eef8ff;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:36px">${s.name[0]||'S'}</div>`}
-      </div>
-      <div style='flex:1'>
-        <h2>${s.name}</h2>
-        <div class='small'>${s.nick}</div>
-        <div><b>Roll:</b> ${s.roll}</div>
-        <div id="dobDisplay"></div>
-        <div style="margin-top:8px">
-          <button class='btn' onclick='editStudent("${s.id}")'>Edit</button>
-          <button class='btn' onclick='deleteStudent("${s.id}")'>Delete</button>
-          <button class='btn' onclick='setDOB("${s.id}")'>Set DOB</button>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <h3>Monthly Breakdown</h3>
-    ${Object.keys(s.monthly).length === 0 ? '<div class="small">No monthly data yet</div>' : Object.keys(s.monthly).sort().reverse().map(m=>{
-        return `<div class='month-row'><div class='icon-month'>⭐</div><div><b>${m}</b><div class='small'>${s.monthly[m]} ⭐</div></div></div>`;
-    }).join('')}
-  `;
-  document.getElementById('modalBody').innerHTML = html;
-  modal.style.display='flex';
-  if(s.dob) startAgeTimer(s.id, s.dob);
-}
-
-/* --- EDIT / DELETE / DOB --- */
-function deleteStudent(id){ if(!confirm('Delete student?')) return; state.students = state.students.filter(s=>s.id!==id); saveLocal(); refreshAll(); closeModal(); }
-function editStudent(id){
-  const s = state.students.find(x=>x.id===id); if(!s) return;
-  const newName = prompt('New name:', s.name)||s.name;
-  const newRoll = prompt('New roll:', s.roll)||s.roll;
-  s.name=newName; s.roll=newRoll; s.nick=genHindiNickname(newName);
-  const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*';
-  fileInput.onchange=(e)=>{ const file=e.target.files[0]; if(file){ const r=new FileReader(); r.onload=()=>{ s.photo=r.result; saveLocal(); refreshAll(); openProfile(s); }; r.readAsDataURL(file); } else { saveLocal(); refreshAll(); openProfile(s); } }
-  fileInput.click();
-}
-function setDOB(id){ const s=state.students.find(x=>x.id===id); if(!s) return; const dob=prompt('Enter DOB (YYYY-MM-DD):', s.dob||''); if(!dob) return; s.dob=dob; saveLocal(); startAgeTimer(id,dob); }
-function startAgeTimer(id,dob){
-  const el=document.getElementById('dobDisplay'); if(!el) return;
-  clearInterval(el._timer);
-  function update(){ const birth=new Date(dob); const now=new Date(); let diff=now-birth;
-    const years=Math.floor(diff/(365.25*24*60*60*1000)); diff-=years*(365.25*24*60*60*1000);
-    const months=Math.floor(diff/(30.44*24*60*60*1000)); diff-=months*(30.44*24*60*60*1000);
-    const days=Math.floor(diff/(24*60*60*1000)); diff-=days*24*60*60*1000;
-    const hrs=Math.floor(diff/(1000*60*60)); diff-=hrs*1000*60*60;
-    const mins=Math.floor(diff/(1000*60)); diff-=mins*1000*60;
-    const secs=Math.floor(diff/1000);
-    el.innerHTML=`<b>DOB:</b> ${dob} • Age: ${years}y ${months}m ${days}d ${hrs}h ${mins}m ${secs}s`;
+  const dob = document.getElementById('newDOB').value;
+  const file = document.getElementById('newPhoto').files[0];
+  if(!name || !roll) return alert('Name and Roll required');
+  
+  let s;
+  if(state.selectedIdx !== null){
+    s = state.students[state.selectedIdx]; // edit
+    s.name = name; s.roll = roll; s.dob = dob;
+  } else {
+    s = { id: uid(), name, roll, dob, totalStars:0, photo:null };
+    state.students.push(s);
   }
-  update(); el._timer=setInterval(update,1000);
+  
+  if(file){
+    const reader = new FileReader();
+    reader.onload = ()=>{ s.photo = reader.result; saveState(); refreshAll(); };
+    reader.readAsDataURL(file);
+  } else { saveState(); refreshAll(); }
+  state.selectedIdx = null;
 }
 
-/* --- MARK REWARD --- */
-function markReward(id){ const s=state.students.find(x=>x.id===id); if(!s) return; s.currentRewardStars=0; saveLocal(); refreshAll(); }
-
-/* --- EXPORT --- */
-function exportJSON(){ const data=JSON.stringify(state.students,null,2); const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='students.json'; a.click(); URL.revokeObjectURL(url); }
-
-/* --- DARK MODE --- */
-document.getElementById('darkToggle').addEventListener('click',()=>{ document.body.classList.toggle('dark'); });
-
-/* --- GITHUB SYNC --- */
-async function syncToGitHub(){ 
-  const owner=document.getElementById('ghOwner').value.trim(); 
-  const repo=document.getElementById('ghRepo').value.trim(); 
-  const path=document.getElementById('ghPath').value.trim()||'data.json';
-  const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('owner, repo, token required');
-  const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const content= btoa(JSON.stringify(state.students,null,2));
-  try{
-    let sha='';
-    const getResp=await fetch(url,{headers:{Authorization:`token ${token}`}});
-    if(getResp.ok){ const j=await getResp.json(); sha=j.sha; }
-    const res=await fetch(url,{method:'PUT',headers:{Authorization:`token ${token}`, 'Content-Type':'application/json'},body:JSON.stringify({message:'update stars',content,sha})});
-    const j=await res.json(); document.getElementById('syncMsg').innerText='Synced to GitHub!';
-  }catch(e){ console.error(e); alert('GitHub sync error'); }
-}
-async function loadFromGitHub(){
-  const owner=document.getElementById('ghOwner').value.trim(); 
-  const repo=document.getElementById('ghRepo').value.trim(); 
-  const path=document.getElementById('ghPath').value.trim()||'data.json';
-  const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('owner, repo, token required');
-  const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  try{ const resp=await fetch(url,{headers:{Authorization:`token ${token}`}}); const j=await resp.json(); if(j.content){ const data=JSON.parse(atob(j.content.replace(/\n/g,''))); state.students=data; saveLocal(); refreshAll(); alert('Loaded from GitHub'); } }catch(e){ console.error(e); alert('GitHub load error'); }
+function removeStudent(){
+  if(state.selectedIdx===null) return alert('Select a student first');
+  state.students.splice(state.selectedIdx,1);
+  state.selectedIdx = null;
+  saveState(); refreshAll();
 }
 
-/* --- INITIAL LOGIN PROMPT --- */
-openLoginModal();
+/* ------------------ STARS ------------------ */
+function giveStars(){
+  if(state.selectedIdx===null) return alert('Select a student first');
+  const count = parseInt(document.getElementById('starCount').value,10) || 0;
+  state.students[state.selectedIdx].totalStars += count;
+  saveState(); refreshAll();
+}
+
+/* ------------------ INITIALIZE ------------------ */
+refreshAll();
 </script>
 </body>
 </html>
