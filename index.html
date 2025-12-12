@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Star Students - PRO MAX</title>
+<link rel="icon" href="data:,">
 <style>
-:root{--bg:#f4f8ff;--card:#fff;--accent:#3466ff;--muted:#6b7f89;--gold:#ffb400;}
-body{margin:0;font-family:Inter, sans-serif;background:var(--bg);color:#0b2a3a;transition:0.3s;}
-.app{max-width:1100px;margin:20px auto;padding:16px;}
-header{background:linear-gradient(135deg,var(--accent),#1a49d8);color:white;padding:22px;border-radius:12px;text-align:center;}
-header h1{margin:0;font-size:22px;}
-.nav{display:flex;gap:8px;justify-content:center;margin:16px 0;}
-.nav .tab{padding:10px 16px;border-radius:999px;background:#eaf4ff;cursor:pointer;font-weight:700;color:var(--accent);}
-.nav .tab.active{background:var(--accent);color:white;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.section{background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(18,52,120,0.04);}
-.student-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:#f0f7ff;cursor:pointer;transition:0.2s;}
-.student-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(52,102,255,0.1);}
-.avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);background:linear-gradient(180deg,#eaf4ff,#e1f0ff);}
-.smeta{display:flex;flex-direction:column;}
-.sname{font-weight:800;color:#12385a;}
-.snick{font-size:13px;color:var(--muted);}
-.stars{font-weight:900;color:var(--gold);}
-.footer{text-align:center;margin-top:20px;color:var(--muted);}
-input, select, button{padding:8px;border-radius:8px;border:1px solid #dfefff;}
-button{cursor:pointer;}
-.modal{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;padding:18px;display:none;}
-.modal-card{width:100%;max-width:720px;background:white;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(2,6,23,0.3);}
-.modal-header{display:flex;justify-content:space-between;align-items:center;}
+:root{--bg:#f4f8ff;--card:#fff;--accent:#3466ff;--muted:#6b7f89;--gold:#ffb400}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:#0b2a3a;transition:.3s}
+body.dark{--bg:#071028;--card:#071428;color:#e6f3ff}
+header{background:linear-gradient(135deg,var(--accent),#1a49d8);color:#fff;padding:22px;border-radius:12px;text-align:center;box-shadow:0 8px 30px rgba(18,52,120,0.12)}
+header h1{margin:0;font-size:22px;letter-spacing:.4px}
+.nav{display:flex;gap:8px;justify-content:center;margin:16px 0}
+.nav .tab{padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,#fff,#eaf4ff);border:1px solid rgba(52,102,255,0.12);cursor:pointer;font-weight:700;color:var(--accent)}
+.nav .tab.active{background:var(--accent);color:#fff;box-shadow:0 8px 24px rgba(26,73,216,0.14)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.section{background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(18,52,120,0.04)}
+.student-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f0f7ff);border:1px solid rgba(52,102,255,0.06);cursor:pointer;transition:transform .18s,box-shadow .18s}
+.student-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(18,52,120,0.06)}
+.avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eaf4ff,#e1f0ff);font-weight:800;color:var(--accent)}
+.smeta{display:flex;flex-direction:column}
+.sname{font-weight:800;color:#12385a}
+.snick,.small{font-size:13px;color:var(--muted)}
+.stars{font-weight:900;color:var(--gold)}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.45);display:flex;align-items:center;justify-content:center;padding:18px;display:none}
+.modal-card{width:100%;max-width:720px;background:white;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(2,6,23,.3)}
+.modal-header{display:flex;justify-content:space-between;align-items:center}
+.month-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;background:#fbfdff;margin:6px 0}
+.icon-month{width:40px;height:40px;border-radius:10px;background:#f0fbff;display:inline-flex;align-items:center;justify-content:center;margin-right:10px}
 </style>
 </head>
 <body>
@@ -36,7 +36,6 @@ button{cursor:pointer;}
   <div>⭐ Star Students</div>
   <h1>by Akash Chaudhary</h1>
 </header>
-
 <div class="nav">
   <div class="tab active" data-page="home">Home</div>
   <div class="tab" data-page="dashboard">Dashboard</div>
@@ -44,215 +43,107 @@ button{cursor:pointer;}
 </div>
 
 <div id="pages">
-  <!-- Home -->
+  <!-- HOME -->
   <div id="home" class="page">
     <div class="grid">
-      <div class="section">
-        <h2>Top Leaders</h2>
-        <div id="topLeaders"></div>
-      </div>
+      <div class="section"><h2>Top Leaders</h2><div id="topLeaders"></div></div>
+      <div class="section"><h2>Scientist of the Month</h2><div id="monthTop"></div></div>
+      <div class="section"><h2>Chocolate Candidates (7–9 ⭐)</h2><div id="chocoList"></div></div>
     </div>
   </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard" class="page" style="display:none;">
-    <div class="section">
-      <h2>All Students</h2>
-      <div id="studentCards"></div>
-    </div>
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="page" style="display:none">
+    <div class="section"><h2>All Students</h2><div id="studentCards"></div></div>
   </div>
 
-  <!-- Star Entry -->
-  <div id="entry" class="page" style="display:none;">
+  <!-- STAR ENTRY -->
+  <div id="entry" class="page" style="display:none">
     <div class="section">
-      <h2>Teacher Login</h2>
-      <input type="password" id="teacherPass" placeholder="Enter Teacher Password">
-      <button onclick="loginTeacher()">Login</button>
-      <div id="loginMsg" style="margin:6px 0;color:red;"></div>
-      <div id="starForm" style="display:none;">
-        <h3>Give Stars</h3>
-        <select id="studentSelect"></select>
-        <select id="starCount"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-        <button onclick="giveStars()">Give Stars</button>
-        <hr>
-        <h3>Add / Edit Student</h3>
-        <input id="newName" placeholder="Name">
-        <input id="newRoll" placeholder="Roll">
-        <input id="newDOB" type="date" placeholder="DOB">
-        <input id="newPhoto" type="file" accept="image/*">
-        <button onclick="addOrEditStudent()">Add / Edit</button>
-        <button onclick="removeStudent()">Remove Selected</button>
-        <hr>
-        <h3>GitHub Sync</h3>
-        <input id="ghOwner" placeholder="Owner">
-        <input id="ghRepo" placeholder="Repo">
-        <input id="ghPath" placeholder="data.json">
-        <input id="ghToken" placeholder="Personal Access Token">
-        <button onclick="loadFromGitHub()">Load</button>
-        <button onclick="syncToGitHub()">Sync</button>
-        <div id="syncMsg" style="margin-top:6px;color:green;"></div>
-      </div>
+      <h2>Give Stars / Add Students</h2>
+      <select id="studentSelect"></select>
+      <input type="number" id="starCount" value="0" min="0" max="5">
+      <button onclick="giveStars()">Give Stars</button>
+      <hr>
+      <input id="newName" placeholder="Name">
+      <input id="newRoll" placeholder="Roll">
+      <input type="file" id="newPhoto" accept="image/*">
+      <button onclick="addStudentFromForm()">Add Student</button>
     </div>
   </div>
 </div>
 
 <div class="footer">Made by Akash Chaudhary</div>
 
-<!-- Modal -->
 <div id="modal" class="modal" onclick="if(event.target.id==='modal') closeModal()">
   <div class="modal-card">
-    <div class="modal-header">
-      <div id="modalTitle"></div>
-      <div><button onclick="closeModal()">Close</button></div>
-    </div>
+    <div class="modal-header"><div id="modalTitle"></div><button onclick="closeModal()">Close</button></div>
     <div id="modalBody"></div>
   </div>
 </div>
 
 <script>
-/* ---------------- STATE ---------------- */
-const LS_KEY='star_students_full';
-let state={students:[],selectedIdx:null,teacherLogged:false,config:{}};
+const LS_KEY='star_students_v4';
+let state={students:[],config:{}};
 loadState();
+function loadState(){try{const r=localStorage.getItem(LS_KEY);if(r) state=JSON.parse(r);}catch(e){console.error(e)}}
+function saveState(){localStorage.setItem(LS_KEY,JSON.stringify(state))}
+function uid(){return Math.random().toString(36).slice(2,9)}
+function ensureStudent(s){s.id=s.id||uid();s.name=s.name||'Unnamed';s.roll=s.roll||'';s.photo=s.photo||null;s.totalStars=s.totalStars||0;s.currentRewardStars=s.currentRewardStars||0;s.monthly=s.monthly||{};s.rewardStatus=s.rewardStatus===undefined?true:s.rewardStatus}
+state.students.forEach(ensureStudent);
 
-function loadState(){try{const raw=localStorage.getItem(LS_KEY); if(raw) state=JSON.parse(raw);}catch(e){console.error(e);}}
-function saveState(){localStorage.setItem(LS_KEY,JSON.stringify(state));}
+function navTo(page){document.querySelectorAll('.nav .tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none');document.getElementById(page).style.display='block';refreshAll()}
+document.querySelectorAll('.nav .tab').forEach(t=>t.addEventListener('click',()=>navTo(t.dataset.page)));
 
-/* ---------------- NAVIGATION ---------------- */
-document.querySelectorAll('.nav .tab').forEach(t=>{
-  t.addEventListener('click',()=>{document.querySelectorAll('.nav .tab').forEach(x=>x.classList.remove('active')); t.classList.add('active'); showPage(t.dataset.page);});
-});
-function showPage(page){
-  document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none');
-  document.getElementById(page).style.display='block';
-  refreshAll();
-}
+function buildStudentCardHTML(s){return `<div class="student-card" onclick="openProfileById('${s.id}')"><div class="avatar">${s.photo?`<img src='${s.photo}' style='width:56px;height:56px;border-radius:50%'>`:(s.name? s.name[0]:'S')}</div><div class="smeta"><div class="sname">${s.name}</div><div class="snick">Roll ${s.roll}</div></div><div class="stars">${s.totalStars} ⭐</div></div>`}
 
-/* ---------------- STUDENT HELPERS ---------------- */
-function uid(){return Math.random().toString(36).slice(2,9);}
-function ensureStudent(s){
-  s.id=s.id||uid();
-  s.name=s.name||'Unnamed';
-  s.roll=s.roll||'';
-  s.dob=s.dob||null;
-  s.photo=s.photo||null;
-  s.totalStars=s.totalStars||0;
-}
-
-/* ---------------- REFRESH UI ---------------- */
 function refreshAll(){
-  const sel=document.getElementById('studentSelect');
-  sel.innerHTML = state.students.map((s,i)=>`<option value="${i}">${s.name} (Roll ${s.roll})</option>`).join('');
-  document.getElementById('studentCards').innerHTML = state.students.map((s,i)=>`
-    <div class="student-card" onclick="state.selectedIdx=${i}; refreshAll()">
-      <div class="avatar">${s.photo ? `<img src="${s.photo}" style="width:56px;height:56px;border-radius:50%">` : s.name[0]}</div>
-      <div class="smeta">
-        <div class="sname">${s.name}</div>
-        <div class="snick">Roll: ${s.roll}</div>
-        ${s.dob? `<div class="small">Age: ${calculateAge(s.dob)}</div>` : ''}
-      </div>
-      <div class="stars">${s.totalStars} ⭐</div>
-    </div>
-  `).join('');
-
-  // top leaders
-  const top = [...state.students].sort((a,b)=>b.totalStars-a.totalStars).slice(0,5);
-  document.getElementById('topLeaders').innerHTML = top.map(s=>`${s.name} - ${s.totalStars} ⭐`).join('<br>');
+  document.getElementById('studentSelect').innerHTML=state.students.map((s,i)=>`<option value="${i}">${s.name} (Roll ${s.roll||i+1})</option>`).join('');
+  document.getElementById('studentCards').innerHTML=state.students.map(buildStudentCardHTML).join('');
+  const top=state.students.sort((a,b)=>b.totalStars-a.totalStars).slice(0,5);
+  document.getElementById('topLeaders').innerHTML=top.map(buildStudentCardHTML).join('');
+  const mk=monthKey();const monthTop=state.students.sort((a,b)=>(b.monthly[mk]||0)-(a.monthly[mk]||0)).slice(0,5);document.getElementById('monthTop').innerHTML=monthTop.map(buildStudentCardHTML).join('');
+  const choco=state.students.filter(s=>s.currentRewardStars>=7 && s.currentRewardStars<10 && s.rewardStatus);document.getElementById('chocoList').innerHTML=choco.map(buildStudentCardHTML).join('');
 }
 setInterval(refreshAll,1000); // live age countdown
 
-/* ---------------- AGE CALC ---------------- */
-function calculateAge(dob){
-  const birth=new Date(dob), now=new Date(), diff=now-birth;
-  const years=Math.floor(diff/(1000*60*60*24*365.25));
-  const months=Math.floor((diff/(1000*60*60*24*30.44))%12);
-  const days=Math.floor((diff/(1000*60*60*24))%30);
-  const seconds=Math.floor(diff/1000%60);
-  return `${years}y, ${months}m, ${days}d, ${seconds}s`;
-}
-
-/* ---------------- CRUD ---------------- */
-function addOrEditStudent(){
-  if(!state.teacherLogged) return alert('Login first!');
+function addStudentFromForm(){
   const name=document.getElementById('newName').value.trim();
   const roll=document.getElementById('newRoll').value.trim();
-  const dob=document.getElementById('newDOB').value;
   const file=document.getElementById('newPhoto').files[0];
-  if(!name||!roll) return alert('Name and Roll required');
-  let s;
-  if(state.selectedIdx!==null){ s=state.students[state.selectedIdx]; s.name=name; s.roll=roll; s.dob=dob; }
-  else{s={id:uid(),name,roll,dob,totalStars:0,photo:null}; state.students.push(s);}
-  if(file){const reader=new FileReader();reader.onload=()=>{s.photo=reader.result;saveState();refreshAll();};reader.readAsDataURL(file);}
-  else{saveState();refreshAll();}
-  state.selectedIdx=null;
+  if(!name||!roll) return alert('Enter name and roll');
+  const s={id:uid(),name,roll,totalStars:0,currentRewardStars:0,monthly:{},rewardStatus:true};
+  if(file){const reader=new FileReader();reader.onload=()=>{s.photo=reader.result;state.students.push(s);saveState();refreshAll()};reader.readAsDataURL(file)}
+  else{state.students.push(s);saveState();refreshAll()}
 }
-function removeStudent(){
-  if(!state.teacherLogged) return alert('Login first!');
-  if(state.selectedIdx===null) return alert('Select a student');
-  state.students.splice(state.selectedIdx,1);
-  state.selectedIdx=null;
-  saveState();refreshAll();
-}
+
 function giveStars(){
-  if(!state.teacherLogged) return alert('Login first!');
-  if(state.selectedIdx===null) return alert('Select a student');
-  const count=parseInt(document.getElementById('starCount').value,10)||0;
-  state.students[state.selectedIdx].totalStars += count;
-  saveState();refreshAll();
+  const sel=document.getElementById('studentSelect');const idx=parseInt(sel.value);if(isNaN(idx)) return;
+  const s=state.students[idx];const count=parseInt(document.getElementById('starCount').value)||0;
+  s.totalStars+=count;s.currentRewardStars+=count;s.monthly[monthKey()]=(s.monthly[monthKey()]||0)+count;if(s.currentRewardStars>=10)s.rewardStatus=false;saveState();refreshAll();
 }
 
-/* ---------------- LOGIN ---------------- */
-function loginTeacher(){
-  const pass=document.getElementById('teacherPass').value;
-  if(pass==='teacher123'){state.teacherLogged=true; document.getElementById('starForm').style.display='block'; document.getElementById('loginMsg').innerText='Logged in!';}
-  else document.getElementById('loginMsg').innerText='Wrong password!';
+function openProfileById(id){const s=state.students.find(x=>x.id===id);if(!s)return;openProfile(s);}
+function openProfile(s){
+  const modal=document.getElementById('modal');document.getElementById('modalTitle').innerText=s.name+' • Profile';
+  const mk=monthKey();
+  const age=calcAge(s.dob||new Date());
+  let html=`<div style="display:flex;gap:14px;flex-wrap:wrap">
+    <div style="width:120px">${s.photo?`<img src="${s.photo}" style="width:120px;height:120px;border-radius:12px;object-fit:cover">`:`<div style="width:120px;height:120px;border-radius:12px;background:#eef8ff;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:36px">${s.name[0]||'S'}</div>`}</div>
+    <div style="flex:1">
+      <h2>${s.name}</h2>
+      <div class="small">Age: ${age}</div>
+      <div><b>Total Stars:</b> ${s.totalStars} ⭐</div>
+      <div><b>This Month:</b> ${s.monthly[mk]||0} ⭐</div>
+      <div><b>Current Cycle:</b> ${s.currentRewardStars}/10 ⭐</div>
+    </div>
+  </div>`;
+  modal.style.display='flex';document.getElementById('modalBody').innerHTML=html;
 }
+function closeModal(){document.getElementById('modal').style.display='none'}
+function monthKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
+function calcAge(dob){const b=new Date(dob),n=new Date(),diff=n-b;const y=Math.floor(diff/31557600000),m=Math.floor((diff/2629800000)%12),d=Math.floor((diff/86400000)%30),s=Math.floor((diff/1000)%60);return `${y}y ${m}m ${d}d ${s}s`}
 
-/* ---------------- MODAL ---------------- */
-function closeModal(){document.getElementById('modal').style.display='none';}
-
-/* ---------------- GITHUB SYNC ---------------- */
-async function loadFromGitHub(){
-  if(!state.teacherLogged) return alert('Login first!');
-  const owner=document.getElementById('ghOwner').value.trim();
-  const repo=document.getElementById('ghRepo').value.trim();
-  const path=document.getElementById('ghPath').value.trim()||'data.json';
-  const token=document.getElementById('ghToken').value.trim();
-  if(!owner||!repo||!token) return alert('Owner, repo, token required');
-  try{
-    const res=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`,{headers:{Authorization:'token '+token}});
-    if(!res.ok) throw new Error('Failed to load: '+res.status);
-    const data=await res.json();
-    const content=atob((data.content||'').replace(/\n/g,''));
-    const parsed=JSON.parse(content||'{}');
-    state.students=parsed.students||state.students;
-    state.config={ghOwner:owner,ghRepo:repo,ghPath:path,ghToken:token};
-    state.students.forEach(ensureStudent);
-    saveState();
-    refreshAll();
-    document.getElementById('syncMsg').innerText='Loaded from GitHub';
-  }catch(e){document.getElementById('syncMsg').innerText='Error: '+e.message;}
-}
-
-async function syncToGitHub(){
-  if(!state.teacherLogged) return alert('Login first!');
-  const {ghOwner,ghRepo,ghPath,ghToken}=state.config;
-  if(!ghOwner||!ghRepo||!ghPath||!ghToken) return alert('Load from GitHub first to set config');
-  const url=`https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghPath}`;
-  const payload={students:state.students};
-  const content=btoa(JSON.stringify(payload,null,2));
-  try{
-    const getRes=await fetch(url,{headers:{Authorization:'token '+ghToken}});
-    let sha=null;
-    if(getRes.ok){const js=await getRes.json(); sha=js.sha;}
-    const putRes=await fetch(url,{method:'PUT',headers:{Authorization:'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify({message:'Update data.json',content,sha})});
-    if(!putRes.ok) throw new Error('Sync failed '+putRes.status);
-    document.getElementById('syncMsg').innerText='Synced to GitHub';
-  }catch(e){document.getElementById('syncMsg').innerText='Error: '+e.message;}
-}
-
-/* ---------------- INIT ---------------- */
-state.students.forEach(ensureStudent);
 refreshAll();
 </script>
 </body>
