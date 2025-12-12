@@ -1,271 +1,1343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Star Students - by Akash Chaudhary (PRO MAX)</title>
-<link rel="icon" href="data:," />
-<style>
-:root{
-  --bg: #f4f8ff; --card:#ffffff; --accent:#3466ff; --muted:#6b7f89; --gold:#ffb400;
-}
-*{box-sizing:border-box}
-body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#0b2a3a; transition:background .3s,color .3s}
-.app{max-width:1100px;margin:20px auto;padding:16px}
-header{background:linear-gradient(135deg,var(--accent),#1a49d8);color:white;padding:22px;border-radius:12px;text-align:center;box-shadow:0 8px 30px rgba(18,52,120,0.12);} 
-header h1{margin:0;font-size:22px;letter-spacing:0.4px}
-.header-meta{font-weight:600;opacity:0.95}
-.top-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:12px}
-.controls{display:flex;gap:8px;align-items:center}
-.btn{background:white;border:0;padding:8px 12px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--accent);box-shadow:0 6px 18px rgba(52,102,255,0.08)}
-.btn.primary{background:linear-gradient(90deg,#ffd54a,#ffb300);color:#1a1a1a}
-.nav{display:flex;gap:8px;justify-content:center;margin:16px 0}
-.nav .tab{padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,#ffffff,#eaf4ff);border:1px solid rgba(52,102,255,0.12);cursor:pointer;font-weight:700;color:var(--accent)}
-.nav .tab.active{background:var(--accent);color:white;box-shadow:0 8px 24px rgba(26,73,216,0.14)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.section{background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(18,52,120,0.04)}
-.section h2{margin:0 0 8px 0;color:var(--accent);font-size:18px}
-.student-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f0f7ff);border:1px solid rgba(52,102,255,0.06);cursor:pointer;transition:transform .18s,box-shadow .18s}
-.student-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(18,52,120,0.06)}
-.avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;flex:0 0 56px;border:3px solid rgba(52,102,255,0.12);display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eaf4ff,#e1f0ff);font-weight:800;color:var(--accent)}
-.smeta{display:flex;flex-direction:column}
-.sname{font-weight:800;color:#12385a}
-.snick{font-size:13px;color:var(--muted)}
-.stars{font-weight:900;color:var(--gold)}
-.small{font-size:13px;color:var(--muted)}
-.footer{margin-top:16px;text-align:center;color:var(--muted)}
-/* modal */
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;padding:18px;}
-.modal-card{width:100%;max-width:720px;background:white;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(2,6,23,0.3)}
-.modal-header{display:flex;justify-content:space-between;align-items:center}
-.modal-body{margin-top:12px}
-.icon-month{width:40px;height:40px;border-radius:10px;background:#f0fbff;display:inline-flex;align-items:center;justify-content:center;margin-right:10px}
-.month-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;background:#fbfdff;margin:6px 0}
-/* small responsive */
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.top-row{flex-direction:column;align-items:stretch}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.avatar{width:48px;height:48px}}
-/* subtle animated background stars (light) */
-.starry{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px);background-size:350px 350px;opacity:0.06}
-/* dark mode */
-body.dark{--bg:#071028;--card:#071428;color:#e6f3ff}
-body.dark header{background:linear-gradient(135deg,#0b2340,#0e3a7b)}
-body.dark .nav .tab{background:transparent;color:#a7c6ff;border:1px solid rgba(167,198,255,0.08)}
-body.dark .section{background:#071428}
-body.dark .student-card{background:linear-gradient(180deg,#08162b,#052036)}
-body.dark .avatar{background:linear-gradient(180deg,#06203a,#04213d);color:#a7c6ff}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Students Manager - Teacher Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* --- 1. UI/UX DESIGN & THEME VARIABLES --- */
+        :root {
+            /* Theme Base */
+            --color-primary: #4c6ef5; /* Blue */
+            --color-success: #2dd4bf; 
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444; 
+            --color-info: #6366f1;
+            --color-star: #ffc107;
+
+            /* Backgrounds */
+            --bg-light: #f5f7fa; /* Body background */
+            --bg-medium: #ffffff; /* Card/Sidebar background */
+            --bg-dark: #e5e7eb; /* Input/Subtle background */
+            
+            /* Text */
+            --text-dark: #1f2937;
+            --text-muted: #667085;
+            
+            /* Dimensions */
+            --border-radius-card: 16px;
+            --border-radius-input: 10px;
+            --shadow-soft: 0 8px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            --transition-duration: 0.3s;
+            --sidebar-width: 260px;
+        }
+
+        /* --- 1.1. DARK MODE VARIABLES --- */
+        body[data-theme="dark"] {
+            --bg-light: #1e1e2f; 
+            --bg-medium: #2c2c3c; 
+            --bg-dark: #181825; 
+            
+            --text-dark: #e0e0e0;
+            --text-muted: #b0b0c0;
+            --shadow-soft: 0 8px 20px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- 1.2. COLOR CUSTOMIZATION --- */
+        body[data-color="purple"] { --color-primary: #a78bfa; }
+        body[data-color="green"] { --color-primary: #10b981; }
+
+        /* --- 2. BASE STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            transition: background-color var(--transition-duration), color var(--transition-duration);
+            min-height: 100vh;
+            padding: 0; 
+        }
+        h1, h2, h3, h4 { color: var(--text-dark); margin-bottom: 10px; }
+        .muted-text { color: var(--text-muted); font-size: 0.9rem; }
+        .mt-15 { margin-top: 15px; }
+        .mt-20 { margin-top: 20px; }
+        .error-message { color: var(--color-danger); font-weight: 600; margin-top: 10px; }
+        .empty-message { text-align: center; color: var(--text-muted); padding: 40px 20px; border: 1px dashed var(--bg-dark); border-radius: var(--border-radius-card); margin-top: 20px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 3. LAYOUT GRID (Sidebar + Content) --- */
+        body {
+            display: grid;
+            grid-template-areas: "content"; 
+            grid-template-columns: 1fr;
+        }
+
+        body[data-logged-in="true"] {
+            grid-template-areas: "sidebar content";
+            grid-template-columns: var(--sidebar-width) 1fr;
+        }
+
+        #content-wrapper {
+            grid-area: content;
+            min-height: 100vh;
+            padding: 20px 30px; 
+            background-color: var(--bg-light);
+            transition: padding-left 0.3s, background-color var(--transition-duration);
+            position: relative; 
+        }
+        .app-view {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 40px);
+            display: none;
+        }
+        .app-view.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .page-view { max-width: 1000px; margin: 0 auto; padding: 0; }
+
+        /* --- 4. SIDEBAR --- */
+        #sidebar {
+            grid-area: sidebar;
+            background-color: var(--bg-medium);
+            color: var(--text-dark);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            transition: background-color var(--transition-duration);
+            z-index: 1000;
+        }
+        /* ... (Sidebar styling is as before: header, menu, nav-item, footer) ... */
+        .sidebar-header h3 { color: var(--color-primary); font-weight: 700; font-size: 24px; }
+        .sidebar-menu { list-style: none; padding: 20px 0; }
+        .sidebar-menu li a { display: flex; align-items: center; padding: 12px 15px; border-radius: var(--border-radius-input); color: var(--text-dark); text-decoration: none; margin-bottom: 5px; transition: background-color 0.2s, color 0.2s; }
+        .sidebar-menu li a i { margin-right: 10px; width: 18px; height: 18px; }
+        .sidebar-menu li a:hover { background-color: var(--bg-dark); }
+        .sidebar-menu li a.active { background-color: var(--color-primary); color: var(--bg-medium); box-shadow: var(--shadow-soft); }
+        .sidebar-menu li a.active i { stroke: var(--bg-medium); }
+        .sidebar-footer { border-top: 1px solid var(--bg-dark); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+
+        /* --- 5. BUTTONS --- */
+        .btn, .icon-btn { cursor: pointer; border: none; padding: 10px 15px; border-radius: var(--border-radius-input); font-weight: 600; transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn i { margin-right: 8px; }
+        .btn.large-btn { padding: 12px 20px; font-size: 1.1rem; }
+        .primary-btn { background-color: var(--color-primary); color: white; }
+        .primary-btn:hover { background-color: var(--color-primary); opacity: 0.9; }
+        .success-btn { background-color: var(--color-success); color: var(--text-dark); }
+        .danger-btn { background-color: var(--color-danger); color: white; }
+        .info-btn { background-color: var(--color-info); color: white; }
+        .warning-btn { background-color: var(--color-warning); color: var(--text-dark); }
+        .icon-btn { background: var(--bg-dark); color: var(--text-dark); padding: 8px; }
+        .icon-btn i { margin: 0; }
+        .danger-btn-icon { background: var(--color-danger); color: white; padding: 8px 15px; }
+
+        /* --- 6. FORMS & INPUTS --- */
+        .form-card { background-color: var(--bg-medium); padding: 30px; border-radius: var(--border-radius-card); box-shadow: var(--shadow-soft); max-width: 500px; margin: 20px auto; }
+        .input-group { display: flex; align-items: center; margin-bottom: 15px; background-color: var(--bg-dark); border-radius: var(--border-radius-input); padding: 8px 15px; transition: box-shadow 0.2s; }
+        .input-group i { margin-right: 10px; color: var(--text-muted); }
+        .input-group input, .input-group select, textarea { flex-grow: 1; border: none; background: transparent; padding: 5px 0; color: var(--text-dark); outline: none; font-size: 1rem; }
+        .input-group:focus-within { box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.2); }
+        textarea { width: 100%; min-height: 100px; background-color: var(--bg-dark); border-radius: var(--border-radius-input); padding: 15px; margin-bottom: 15px; border: none; color: var(--text-dark); }
+        .search-group { max-width: 300px; margin-right: 20px; }
+
+        /* --- 7. CARDS & GRID LAYOUTS --- */
+        .card { background-color: var(--bg-medium); padding: 25px; border-radius: var(--border-radius-card); box-shadow: var(--shadow-soft); transition: background-color var(--transition-duration); }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .dash-card { text-align: center; cursor: pointer; padding: 30px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+        .dash-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1); }
+        .dash-card i { width: 40px; height: 40px; stroke-width: 1.5; margin-bottom: 10px; }
+        .dash-card.primary i { color: var(--color-primary); }
+        .dash-card.success i { color: var(--color-success); }
+        .dash-card.warning i { color: var(--color-warning); }
+        .dash-card.info i { color: var(--color-info); }
+        .dash-card.star-card i { color: var(--color-star); fill: var(--color-star); }
+
+        /* Student List Grid */
+        .student-list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+        .student-card { display: flex; align-items: center; padding: 15px; border-left: 5px solid var(--color-primary); cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
+        .student-card:hover { background-color: var(--bg-dark); border-left-color: var(--color-success); }
+        .student-card .avatar { width: 50px; height: 50px; border-radius: 50%; background-color: #6366f1; color: white; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 1.1rem; margin-right: 15px; flex-shrink: 0; }
+        .student-card .info { flex-grow: 1; overflow: hidden; }
+        .student-card .info h4 { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .student-card .info p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+        .student-card .stars { font-size: 1.2rem; font-weight: 700; color: var(--color-star); display: flex; align-items: center; margin-left: 15px; }
+        .student-card .stars i { width: 20px; height: 20px; margin-right: 5px; fill: var(--color-star); stroke: var(--color-star); }
+
+        .list-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 20px; }
+        .list-controls select { padding: 10px 15px; border-radius: var(--border-radius-input); background-color: var(--bg-dark); border: 1px solid var(--bg-dark); color: var(--text-dark); }
+
+
+        /* --- 8. LOGIN VIEW (FIX) --- */
+        #login-view {
+            grid-area: content;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1001; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-light); 
+            padding: 0;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-out, visibility 0.5s; /* Smooth fade-out */
+        }
+
+        /* THE FIX: Ensure login view is fully gone when not active */
+        #login-view:not(.active) {
+            opacity: 0;
+            visibility: hidden;
+            display: none; /* Required to remove from flow after transition */
+        }
+
+        .login-card { text-align: center; max-width: 350px; }
+        .login-card h1 { color: var(--color-primary); }
+        .login-card p { margin-bottom: 20px; color: var(--text-muted); }
+        .login-card .input-group { background-color: var(--bg-dark); }
+        .login-card .primary-btn { width: 100%; margin-top: 10px; }
+
+        /* --- 9. MODALS --- */
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--bg-medium); padding: 30px; border-radius: var(--border-radius-card); max-width: 600px; width: 90%; position: relative; max-height: 90vh; overflow-y: auto; transform: translateY(-20px); transition: transform 0.3s; }
+        .modal.active .modal-content { transform: translateY(0); }
+        .close-btn { position: absolute; top: 15px; right: 15px; padding: 5px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
+
+        /* Profile Modal Specifics */
+        .profile-content { text-align: center; }
+        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background-color: var(--color-info); color: white; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 2rem; margin: 0 auto 15px; }
+        .profile-stars { font-size: 1.5rem; font-weight: 700; color: var(--color-star); margin: 20px 0; display: flex; align-items: center; justify-content: center; border: 2px solid var(--color-star); border-radius: var(--border-radius-input); padding: 10px; }
+        .profile-stars i { fill: var(--color-star); stroke: var(--color-star); margin-right: 10px; width: 30px; height: 30px; }
+        .profile-section { text-align: left; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--bg-dark); }
+        .profile-actions .action-group { display: flex; gap: 10px; margin-top: 10px; }
+        .history-timeline { max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid var(--bg-dark); border-radius: var(--border-radius-input); }
+        .history-item { padding: 10px; border-left: 4px solid var(--color-primary); margin-bottom: 10px; background-color: var(--bg-dark); border-radius: 5px; }
+        .history-item.add { border-left-color: var(--color-success); }
+        .history-item.remove { border-left-color: var(--color-danger); }
+        .history-item .date { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
+
+        /* Confetti */
+        #confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+        .confetti-piece { position: absolute; width: 8px; height: 16px; opacity: 0; animation: fall 1.5s forwards; }
+        @keyframes fall {
+            0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+            100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(720deg); }
+        }
+
+        /* --- 10. LEADERBOARD & ANALYTICS --- */
+        .leaderboard-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .leaderboard-card { display: flex; align-items: center; padding: 15px; border-left: 5px solid var(--bg-dark); background-color: var(--bg-medium); border-radius: var(--border-radius-card); box-shadow: var(--shadow-soft); transition: transform 0.2s, border-left-color 0.2s; }
+        .leaderboard-card:hover { transform: scale(1.01); }
+        .leaderboard-card .rank { font-size: 1.5rem; font-weight: 700; width: 40px; text-align: center; margin-right: 15px; color: var(--color-primary); }
+        .leaderboard-card .trophy-icon { width: 30px; height: 30px; margin-right: 15px; }
+        .leaderboard-card .name { flex-grow: 1; font-weight: 600; }
+        .leaderboard-card .star-count { font-size: 1.2rem; font-weight: 700; color: var(--color-star); display: flex; align-items: center; margin-left: 20px; }
+        .leaderboard-card .star-count i { fill: var(--color-star); stroke: var(--color-star); margin-left: 5px; }
+
+        .chart-card { height: 400px; padding: 25px; }
+        .chart-card h3 { margin-bottom: 20px; text-align: center; }
+        #star-class-chart, #star-pie-chart { max-height: 350px; }
+
+        /* --- 11. SETTINGS & THEME --- */
+        .settings-group { margin-bottom: 30px; }
+        .theme-picker { display: flex; gap: 15px; margin-top: 15px; }
+        .theme-option { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: border-color 0.2s; }
+        .theme-option.active { border-color: var(--color-primary); }
+        .theme-blue { background-color: #4c6ef5; }
+        .theme-purple { background-color: #a78bfa; }
+        .theme-green { background-color: #10b981; }
+        .danger-card { border: 1px solid var(--color-danger); }
+
+        /* --- 12. TOAST NOTIFICATIONS --- */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column-reverse; gap: 10px; }
+        .toast { background-color: var(--color-primary); color: white; padding: 15px 20px; border-radius: var(--border-radius-input); box-shadow: var(--shadow-soft); display: flex; align-items: center; opacity: 0; transform: translateX(100%); transition: opacity 0.3s, transform 0.3s; }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast i { margin-right: 10px; }
+        .toast.success { background-color: var(--color-success); color: var(--text-dark); }
+        .toast.danger { background-color: var(--color-danger); color: white; }
+
+        /* --- 13. RESPONSIVENESS (Mobile View) --- */
+        .mobile-only { display: none; }
+        @media (max-width: 768px) {
+            body[data-logged-in="true"] {
+                grid-template-areas: "content";
+                grid-template-columns: 1fr;
+            }
+            #sidebar {
+                position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-width); transform: translateX(-100%); transition: transform 0.3s ease-in-out;
+            }
+            #sidebar.active { transform: translateX(0); box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2); }
+            #content-wrapper { padding: 60px 20px 20px 20px; }
+            .mobile-only { display: block; position: fixed; top: 10px; left: 10px; z-index: 1010; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .student-list-grid { grid-template-columns: 1fr; }
+            .list-controls { flex-direction: column; align-items: stretch; }
+            .search-group { max-width: 100%; margin-right: 0; }
+            .login-card { max-width: 90%; }
+        }
+    </style>
 </head>
-<body>
-<div class="starry" aria-hidden></div>
-<div class="app">
-  <header>
-    <div class="header-meta">⭐ Star Students</div>
-    <h1>by Akash Chaudhary</h1>
-    <div class="top-row">
-      <div class="controls">
-        <button class="btn" id="darkToggle">Toggle Dark</button>
-        <button class="btn" onclick="exportJSON()">Export JSON</button>
-      </div>
-      <div style="text-align:right">
-        <div class="small">Sync to GitHub (optional)</div>
-      </div>
-    </div>
-  </header>
-
-  <div class="nav" role="tablist">
-    <div class="tab active" data-page="home">Home</div>
-    <div class="tab" data-page="dashboard">Student Dashboard</div>
-    <div class="tab" data-page="entry">Star Entry</div>
-    <div class="tab" data-page="reward">Chocolate Given</div>
-  </div>
-
-  <div id="pages">
-    <div id="home" class="page">
-      <div class="grid">
-        <div class="section">
-          <h2>Top Leaders (Overall)</h2>
-          <div id="topLeaders"></div>
+<body data-theme="light" data-color="blue" data-logged-in="false">
+    
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Star Manager</h3>
         </div>
-        <div class="section">
-          <h2>Scientist of the Month</h2>
-          <div id="monthTop"></div>
+        <ul class="sidebar-menu">
+            <li><a href="#" data-target="dashboard-view" class="nav-item active"><i data-feather="grid"></i> Dashboard</a></li>
+            <li><a href="#" data-target="student-list-view" class="nav-item"><i data-feather="users"></i> Students</a></li>
+            <li><a href="#" data-target="leaderboard-view" class="nav-item"><i data-feather="award"></i> Leaderboard</a></li>
+            <li><a href="#" data-target="analytics-view" class="nav-item"><i data-feather="bar-chart-2"></i> Analytics</a></li>
+            <li><a href="#" data-target="add-student-view" class="nav-item"><i data-feather="user-plus"></i> Add Student</a></li>
+            <li><a href="#" data-target="settings-view" class="nav-item"><i data-feather="settings"></i> Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="dark-mode-toggle" class="icon-btn" title="Toggle Dark Mode">
+                <i data-feather="sun"></i>
+            </button>
+            <button id="logout-btn" class="danger-btn-icon" title="Logout">
+                <i data-feather="log-out"></i> Logout
+            </button>
         </div>
-        <div class="section">
-          <h2>Chocolate Candidates (7–9 ⭐)</h2>
-          <div id="chocoList"></div>
+    </nav>
+
+    <div id="content-wrapper">
+        <button id="mobile-menu-toggle" class="icon-btn mobile-only"><i data-feather="menu"></i></button>
+
+        <div id="login-view" class="app-view active">
+            <div class="card login-card">
+                <h1>Star Manager</h1>
+                <p>Teacher Login</p>
+                <form id="login-form">
+                    <div class="input-group">
+                        <i data-feather="lock"></i>
+                        <input type="password" id="password-input" placeholder="Teacher PIN (e.g., 1234)" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Login</button>
+                    <p id="login-error" class="error-message"></p>
+                </form>
+            </div>
         </div>
-      </div>
+
+        <div id="dashboard-view" class="app-view page-view">
+            <h2>Dashboard</h2>
+            <main class="dashboard-grid">
+                <div class="dash-card primary" data-target="student-list-view">
+                    <i data-feather="users"></i><h3>Student List</h3><p>View & manage profiles.</p>
+                </div>
+                <div class="dash-card success" data-target="add-student-view">
+                    <i data-feather="user-plus"></i><h3>Add Student</h3><p>Register a new student.</p>
+                </div>
+                <div class="dash-card star-card" data-target="student-list-view">
+                    <i data-feather="star"></i><h3>Give Stars</h3><p>Quickly award stars.</p>
+                </div>
+                <div class="dash-card info" data-target="leaderboard-view">
+                    <i data-feather="award"></i><h3>Leaderboard</h3><p>Top star earners.</p>
+                </div>
+                <div class="dash-card warning" data-target="analytics-view">
+                    <i data-feather="bar-chart-2"></i><h3>Analytics</h3><p>View class performance.</p>
+                </div>
+                <div class="dash-card" data-target="settings-view">
+                    <i data-feather="settings"></i><h3>Settings</h3><p>App configuration.</p>
+                </div>
+            </main>
+        </div>
+
+        <div id="student-list-view" class="app-view page-view">
+            <h2>Student Roster</h2>
+            <div class="list-controls">
+                <div class="input-group search-group">
+                    <i data-feather="search"></i>
+                    <input type="text" id="student-search" placeholder="Search by name...">
+                </div>
+                <select id="class-filter">
+                    <option value="">All Classes</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="stars-desc">⭐ Stars (High)</option>
+                    <option value="name-asc">A-Z Name</option>
+                    <option value="roll-asc">Roll No.</option>
+                </select>
+            </div>
+            <div id="student-list-container" class="student-list-grid">
+                <p id="no-students-message" class="empty-message">No students found. Use the 'Add Student' tab to add one!</p>
+            </div>
+        </div>
+
+        <div id="add-student-view" class="app-view page-view">
+            <h2>Add New Student</h2>
+            <form id="add-student-form" class="form-card">
+                <div class="input-group"><i data-feather="user"></i><input type="text" id="add-name" placeholder="Full Name" required></div>
+                <div class="input-group"><i data-feather="bookmark"></i><input type="text" id="add-class" placeholder="Class (e.g., 5A)" required></div>
+                <div class="input-group"><i data-feather="hash"></i><input type="number" id="add-roll" placeholder="Roll Number" required></div>
+                <div class="input-group"><i data-feather="star"></i><input type="number" id="add-stars" placeholder="Initial Stars (e.g., 0)" value="0"></div>
+                <textarea id="add-notes" placeholder="Initial behaviour notes... (Optional)"></textarea>
+                <button type="submit" class="btn primary-btn large-btn"><i data-feather="user-plus"></i> Add Student</button>
+            </form>
+        </div>
+
+        <div id="leaderboard-view" class="app-view page-view">
+            <h2>Star Leaderboard 🏆</h2>
+            <div id="leaderboard-container" class="leaderboard-list"></div>
+        </div>
+
+        <div id="analytics-view" class="app-view page-view">
+            <h2>Star Analytics 📊</h2>
+            <div class="card chart-card">
+                <h3>Total Stars Per Class</h3>
+                <canvas id="star-class-chart"></canvas>
+            </div>
+            <div class="card chart-card mt-20">
+                <h3>Top 5 Students by Stars</h3>
+                <canvas id="star-pie-chart"></canvas>
+            </div>
+        </div>
+
+        <div id="settings-view" class="app-view page-view">
+            <h2>Settings ⚙️</h2>
+            <div class="settings-group">
+                <h3>Security</h3>
+                <form id="change-password-form" class="form-card">
+                    <p class="muted-text">Change Teacher Login PIN</p>
+                    <div class="input-group">
+                        <i data-feather="lock"></i>
+                        <input type="password" id="new-password" placeholder="New PIN (4+ digits)" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Update PIN</button>
+                </form>
+            </div>
+
+            <div class="settings-group">
+                <h3>Theme Customization</h3>
+                <div class="form-card">
+                    <p class="muted-text">Select Primary Color:</p>
+                    <div class="theme-picker">
+                        <div class="theme-option theme-blue active" data-color="blue" title="Blue Accent"></div>
+                        <div class="theme-option theme-purple" data-color="purple" title="Purple Accent"></div>
+                        <div class="theme-option theme-green" data-color="green" title="Green Accent"></div>
+                    </div>
+                </div>
+                <div class="form-card mt-20">
+                    <p class="muted-text">Import / Export Data</p>
+                    <button id="export-data-btn" class="btn primary-btn"><i data-feather="download"></i> Export Data</button>
+                    <input type="file" id="import-file" accept="application/json" class="file-input" style="display: none;">
+                    <button id="import-data-trigger" class="btn warning-btn" style="margin-top: 10px;"><i data-feather="upload"></i> Import Data</button>
+                </div>
+            </div>
+            
+            <div class="settings-group danger-zone">
+                <h3>Danger Zone</h3>
+                <div class="form-card danger-card">
+                    <p class="muted-text">Permanently delete all students, history, and notes (except PIN).</p>
+                    <button id="full-reset-btn" class="btn danger-btn large-btn"><i data-feather="trash-2"></i> Full App Data Reset</button>
+                </div>
+            </div>
+        </div>
+
+    </div> <div id="profile-modal" class="modal">
+        <div class="modal-content profile-content">
+            <button class="close-btn" id="close-profile-modal"><i data-feather="x"></i></button>
+            <div id="confetti-container"></div>
+            
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar">S</div>
+                <h2 id="profile-name"></h2>
+                <p class="muted-text"><span id="profile-class"></span>, Roll: <span id="profile-roll"></span></p>
+            </div>
+            
+            <div class="profile-stars">
+                <i data-feather="star" class="star-icon"></i>
+                Total Stars: <span id="profile-star-count">0</span>
+            </div>
+
+            <div class="profile-actions card-sm">
+                <h3>Quick Star Actions</h3>
+                <div class="action-group">
+                    <button class="btn success-btn star-btn" data-action="add-star"><i data-feather="plus"></i> Add Stars</button>
+                    <button class="btn danger-btn star-btn" data-action="remove-star"><i data-feather="minus"></i> Remove Stars</button>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3><i data-feather="file-text"></i> Notes & Edit</h3>
+                <textarea id="profile-notes" placeholder="Add behaviour notes here..."></textarea>
+                <div class="action-group mt-15">
+                    <button id="save-notes-btn" class="btn primary-btn"><i data-feather="save"></i> Save Notes</button>
+                    <button id="edit-student-btn" class="btn info-btn"><i data-feather="edit"></i> Edit Details</button>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3><i data-feather="clock"></i> Star History Timeline</h3>
+                <div id="star-history-timeline" class="history-timeline"></div>
+            </div>
+            
+            <button id="delete-student-btn" class="btn danger-btn mt-20 large-btn"><i data-feather="trash-2"></i> Delete Student</button>
+        </div>
     </div>
 
-    <div id="dashboard" class="page" style="display:none;margin-top:12px">
-      <div class="section">
-        <h2>All Students</h2>
-        <div id="studentCards"></div>
-      </div>
-    </div>
-
-    <div id="entry" class="page" style="display:none;margin-top:12px">
-      <div class="section">
-        <h2>Give Stars</h2>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select id="studentSelect" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff"></select>
-          <select id="starCount" style="width:110px;padding:12px;border-radius:10px;border:1px solid #dfefff"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-          <button class="btn primary" onclick="giveStars()">Give</button>
+    <div id="star-action-modal" class="modal">
+        <div class="modal-content star-action-content">
+            <button class="close-btn" id="close-star-action-modal"><i data-feather="x"></i></button>
+            <h2 id="star-action-title"></h2>
+            <form id="star-action-form">
+                <input type="hidden" id="star-action-type">
+                <input type="hidden" id="star-action-student-id">
+                
+                <div class="input-group">
+                    <i data-feather="star"></i>
+                    <input type="number" id="star-amount" placeholder="Number of Stars (1+)" min="1" required>
+                </div>
+                
+                <textarea id="star-reason" placeholder="Reason/Comment (e.g., 'Excellent presentation')"></textarea>
+                
+                <p id="star-action-info" class="muted-text"></p>
+                
+                <button type="submit" id="star-submit-btn" class="btn primary-btn large-btn mt-15">
+                    <i data-feather="check"></i> Confirm Action
+                </button>
+            </form>
         </div>
-        <hr style="margin:14px 0">
-        <h3>Add Student</h3>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="newName" placeholder="Name" style="flex:1;padding:12px;border-radius:10px;border:1px solid #dfefff">
-          <input id="newRoll" placeholder="Roll" style="width:120px;padding:12px;border-radius:10px;border:1px solid #dfefff">
-          <input id="newPhoto" type="file" accept="image/*">
-          <button class="btn" onclick="addStudentFromForm()">Add Student</button>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-edit-modal"><i data-feather="x"></i></button>
+            <h2>Edit Student Details</h2>
+            <form id="edit-student-form" class="form-card">
+                <input type="hidden" id="edit-id">
+                <div class="input-group"><i data-feather="user"></i><input type="text" id="edit-name" placeholder="Name" required></div>
+                <div class="input-group"><i data-feather="bookmark"></i><input type="text" id="edit-class" placeholder="Class (e.g., 5B)" required></div>
+                <div class="input-group"><i data-feather="hash"></i><input type="number" id="edit-roll" placeholder="Roll Number" required></div>
+                <button type="submit" class="btn primary-btn">Save Changes</button>
+            </form>
         </div>
-        <div style="margin-top:12px">
-          <small class="small">GitHub Sync (optional): Owner, Repo, Path, Token saved locally only.</small>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <input id="ghOwner" placeholder="owner" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghRepo" placeholder="repo" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghPath" placeholder="data.json" value="data.json" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <input id="ghToken" placeholder="token" style="padding:8px;border-radius:8px;border:1px solid #dfefff">
-            <button class="btn" onclick="loadFromGitHub()">Load</button>
-            <button class="btn" onclick="syncToGitHub()">Sync</button>
-          </div>
-          <div id="syncMsg" class="small muted" style="margin-top:6px"></div>
-        </div>
-      </div>
     </div>
 
-    <div id="reward" class="page" style="display:none;margin-top:12px">
-      <div class="section">
-        <h2>Pending Chocolate Rewards</h2>
-        <div id="rewardList"></div>
-      </div>
-    </div>
-  </div>
+    <div id="toast-container"></div>
+    
+    <script>
+        
+        // --- 1. State Module (Manages app data and persistence) ---
+        const StateModule = (function() {
+            const STATE_KEYS = {
+                STUDENTS: 'starManager_students_v2',
+                HISTORY: 'starManager_starHistory_v2',
+                PASSWORD: 'starManager_teacherPassword_v2',
+                THEME: 'starManager_themeMode_v2',
+                COLOR: 'starManager_colorTheme_v2',
+            };
 
-  <div class="footer">Made by Akash Chaudhary</div>
-</div>
+            const DEMO_STUDENTS = [
+                { id: 's1', name: 'Maya Sharma', class: '5A', roll: 12, stars: 150, notes: 'Excellent leadership skills. Always helps classmates.', avatar: 'MS' },
+                { id: 's2', name: 'Rohan Singh', class: '5A', roll: 25, stars: 90, notes: 'Needs improvement in focusing during quiet work.', avatar: 'RS' },
+                { id: 's3', name: 'Priya Verma', class: '6B', roll: 4, stars: 210, notes: 'Top performer! Great enthusiasm for challenges.', avatar: 'PV' },
+                { id: 's4', name: 'Arjun Das', class: '6B', roll: 18, stars: 55, notes: 'Good start, struggling with teamwork sometimes.', avatar: 'AD' },
+            ];
 
-<!-- Modal -->
-<div id="modal" style="display:none" class="modal" onclick="if(event.target.id==='modal') closeModal()">
-  <div class="modal-card" role="dialog" aria-modal="true">
-    <div class="modal-header">
-      <div id="modalTitle"></div>
-      <div><button class="btn" onclick="closeModal()">Close</button></div>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
-</div>
+            let appState = {
+                students: [],
+                starHistory: [],
+                teacherPassword: '1234', 
+                themeMode: 'light', 
+                colorTheme: 'blue' 
+            };
+            
+            let currentModalStudentId = null;
 
-<script>
-// Data + persistence
-const LS_KEY='star_students_v3';
-let state = { students: [], config: {} };
-let selectedIndex = null; // index in students array (preserved)
+            function saveState() {
+                try {
+                    localStorage.setItem(STATE_KEYS.STUDENTS, JSON.stringify(appState.students));
+                    localStorage.setItem(STATE_KEYS.HISTORY, JSON.stringify(appState.starHistory));
+                    localStorage.setItem(STATE_KEYS.PASSWORD, appState.teacherPassword);
+                    localStorage.setItem(STATE_KEYS.THEME, appState.themeMode);
+                    localStorage.setItem(STATE_KEYS.COLOR, appState.colorTheme);
+                } catch (e) {
+                    console.error("Error saving state to localStorage:", e);
+                }
+            }
 
-function loadLocal(){ try{ const raw = localStorage.getItem(LS_KEY); if(raw) state = JSON.parse(raw); }catch(e){console.error(e);} }
-function saveLocal(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
-loadLocal();
+            function loadState() {
+                try {
+                    appState.teacherPassword = localStorage.getItem(STATE_KEYS.PASSWORD) || appState.teacherPassword;
+                    appState.themeMode = localStorage.getItem(STATE_KEYS.THEME) || appState.themeMode;
+                    appState.colorTheme = localStorage.getItem(STATE_KEYS.COLOR) || appState.colorTheme;
+                    
+                    const storedStudents = JSON.parse(localStorage.getItem(STATE_KEYS.STUDENTS));
+                    if (storedStudents && storedStudents.length > 0) {
+                        appState.students = storedStudents;
+                        appState.starHistory = JSON.parse(localStorage.getItem(STATE_KEYS.HISTORY) || '[]');
+                    } else {
+                        appState.students = DEMO_STUDENTS; // Load demo data if empty
+                        appState.starHistory = [];
+                    }
+                } catch (e) {
+                    console.error("Error loading state from localStorage:", e);
+                    appState.students = DEMO_STUDENTS;
+                    appState.starHistory = [];
+                }
+            }
 
-function uid(){ return Math.random().toString(36).slice(2,9); }
-function getMonthKey(d=new Date()){ return ${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')} }
+            return {
+                appState,
+                saveState,
+                loadState,
+                DEMO_STUDENTS,
+                STATE_KEYS,
+                getCurrentStudentId: () => currentModalStudentId,
+                setCurrentStudentId: (id) => { currentModalStudentId = id; },
+            };
+        })();
 
-function ensureStudent(s){ s.id = s.id || uid(); s.name = s.name || 'Unnamed'; s.roll = s.roll || ''; s.photo = s.photo || null; s.totalStars = s.totalStars||0; s.currentRewardStars = s.currentRewardStars||0; s.monthly = s.monthly || {}; s.rewardStatus = s.rewardStatus===undefined? true: s.rewardStatus; s.nick = s.nick || genHindiNickname(s.name); }
-state.students.forEach(ensureStudent); saveLocal();
 
-// AI nickname
-function genHindiNickname(name){ if(!name) return 'तारों का दोस्त'; const seeds = ['उभरता हुआ वैज्ञानिक','तारों का खिलाड़ी','ज्ञान योद्धा','सुपर लर्नर','मेधा प्रतीभा','छोटा प्रोफेसर','नव-खोजी','टैलेंटेड स्टार']; let sum=0; for(let i=0;i<name.length;i++) sum+=name.charCodeAt(i); return seeds[sum % seeds.length]; }
+        // --- 2. UI Module (Handles view navigation, modals, and toasts) ---
+        const UIModule = (function(State) {
+            const sidebar = document.getElementById('sidebar');
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            
+            let chartRefs = { starChartClass: null, starChartPie: null };
 
-// Navigation
-const tabs = document.querySelectorAll('.nav .tab'); tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); showPage(t.dataset.page); }));
-function showPage(page){ document.querySelectorAll('#pages .page').forEach(p=>p.style.display='none'); document.getElementById(page).style.display='block'; refreshAll(); }
+            function uuid() {
+                return Date.now().toString(36) + Math.random().toString(36).substring(2);
+            }
 
-// UI builders
-function buildStudentCardHTML(s, idx){ return <div class="student-card" data-idx="${idx}" onclick="openProfileByIdx(${idx})">
-  <div class="avatar">${s.photo?<img src='${s.photo}' style='width:56px;height:56px;object-fit:cover;border-radius:50%'>:${(s.name||'')[0]||'S'}}</div>
-  <div class="smeta"><div class="sname">${s.name}</div><div class="snick">${s.nick} • Roll ${s.roll||'-'}</div></div>
-  <div class="stars">${s.totalStars} ⭐</div>
-</div> }
+            function getTodayDateString() {
+                return new Date().toLocaleString();
+            }
 
-function refreshAll(){
-  // student select preservation
-  const sel = document.getElementById('studentSelect'); const prev = (selectedIndex!==null?selectedIndex:sel.value);
-  sel.innerHTML = state.students.map((s,i)=><option value="${i}">${s.name} (Roll ${s.roll||i+1})</option>).join('') || '<option value="">-- no students --</option>';
-  if(prev!==null && prev!=='' && !isNaN(prev) && prev < state.students.length) { sel.value = prev; selectedIndex = prev; }
+            function showToast(message, type = 'primary', icon = 'info') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `<i data-feather="${icon}"></i> ${message}`;
+                
+                container.appendChild(toast);
+                feather.replace();
 
-  // Dashboard cards
-  document.getElementById('studentCards').innerHTML = state.students.map((s,i)=>buildStudentCardHTML(s,i)).join('') || '<div class="small">No students yet</div>';
+                setTimeout(() => toast.classList.add('show'), 10);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.addEventListener('transitionend', () => toast.remove());
+                }, 3000);
+            }
 
-  // Top Leaders overall
-  const top = [...state.students].sort((a,b)=>b.totalStars - a.totalStars).slice(0,5);
-  document.getElementById('topLeaders').innerHTML = top.map(s=><div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.totalStars} ⭐</div></div>).join('') || '<div class="small">No data</div>';
+            function navigate(targetViewId) {
+                const isLoggedIn = document.body.dataset.loggedIn === 'true';
 
-  // Month Top (scientist)
-  const mk = getMonthKey();
-  const monthTop = [...state.students].sort((a,b)=> (b.monthly[mk]||0) - (a.monthly[mk]||0)).slice(0,5);
-  document.getElementById('monthTop').innerHTML = monthTop.map(s=><div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.monthly[mk]||0} ⭐</div></div>).join('') || '<div class="small">No data</div>';
+                if (targetViewId !== 'login-view' && !isLoggedIn) {
+                    targetViewId = 'login-view';
+                }
 
-  // Chocolate candidates currentRewardStars 7-9 and rewardStatus true
-  const choco = state.students.filter(s=> (s.currentRewardStars >=7 && s.currentRewardStars < 10) && s.rewardStatus===true);
-  document.getElementById('chocoList').innerHTML = choco.map(s=><div class='student-card' onclick='openProfileById("${s.id}")'><div class='avatar'>${s.photo?<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%">:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div class='stars'>${s.currentRewardStars} ⭐</div></div>).join('') || '<div class="small">No candidates yet</div>';
+                document.querySelectorAll('.app-view').forEach(view => {
+                    view.classList.remove('active');
+                });
+                
+                const targetView = document.getElementById(targetViewId);
+                if (targetView) {
+                    targetView.classList.add('active');
+                    
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    document.querySelector(`.nav-item[data-target="${targetViewId}"]`)?.classList.add('active');
+                    
+                    if (sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                    }
+                    
+                    // Specific render calls on view change
+                    if (window.RenderModule) {
+                        if (targetViewId === 'student-list-view') RenderModule.renderStudentList();
+                        if (targetViewId === 'leaderboard-view') RenderModule.renderLeaderboard();
+                        if (targetViewId === 'analytics-view') RenderModule.renderAnalytics();
+                    }
+                }
+            }
+            
+            function openModal(modalId) {
+                document.getElementById(modalId).classList.add('active');
+                feather.replace();
+            }
 
-  // Reward list: those with currentRewardStars >=10 and rewardStatus false
-  const rewards = state.students.filter(s=> s.currentRewardStars >=10 && s.rewardStatus===false);
-  document.getElementById('rewardList').innerHTML = rewards.map(s=>{
-    const need = 10 - (s.currentRewardStars % 10);
-    return <div class='student-card'><div class='avatar'>${s.photo?<img src='${s.photo}' style='width:56px;height:56px;object-fit:cover;border-radius:50%'>:(s.name? s.name[0]:'S')}</div><div class='smeta'><div class='sname'>${s.name}</div><div class='snick'>${s.nick}</div></div><div style='display:flex;flex-direction:column;gap:6px;align-items:flex-end'><div class='small'>Cycle need: ${need}</div><button class='btn' onclick='markChocolateGiven("${s.id}")'>Mark Given</button></div></div>
-  }).join('') || '<div class="small">No pending rewards</div>';
-}
+            function closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            }
 
-// Add student
-function addStudentFromForm(){ const name=document.getElementById('newName').value.trim(); const roll=document.getElementById('newRoll').value.trim(); const file=document.getElementById('newPhoto').files[0]; if(!name||!roll) return alert('Enter name and roll');
-  const s = { id: uid(), name, roll, totalStars:0, currentRewardStars:0, monthly:{}, rewardStatus:true };
-  s.nick = genHindiNickname(s.name);
-  if(file){ const reader=new FileReader(); reader.onload=()=>{ s.photo = reader.result; state.students.push(s); saveLocal(); clearAddForm(); refreshAll(); navTo('entry'); }; reader.readAsDataURL(file); } else { state.students.push(s); saveLocal(); clearAddForm(); refreshAll(); navTo('entry'); }
-}
-function clearAddForm(){ document.getElementById('newName').value=''; document.getElementById('newRoll').value=''; document.getElementById('newPhoto').value=''; }
+            function openProfileModal(studentId) {
+                const student = State.appState.students.find(s => s.id === studentId);
+                if (!student) return;
 
-// Give stars (preserve selection)
-function giveStars(){ const sel=document.getElementById('studentSelect'); if(!sel) return; const idxStr = sel.value; if(idxStr==='') return alert('Choose a student'); const idx = parseInt(idxStr,10); selectedIndex = idx; const count = parseInt(document.getElementById('starCount').value,10) || 0; const s = state.students[idx]; if(!s) return alert('Student not found'); s.totalStars += count; s.currentRewardStars += count; const mk = getMonthKey(); s.monthly[mk] = (s.monthly[mk]||0) + count; if(s.currentRewardStars >= 10) s.rewardStatus = false; saveLocal(); refreshAll(); }
+                State.setCurrentStudentId(studentId);
 
-// mark chocolate given (Option A)
-function markChocolateGiven(id){ const s = state.students.find(x=>x.id===id); if(!s) return; s.currentRewardStars = 0; s.rewardStatus = true; saveLocal(); refreshAll(); }
+                document.getElementById('profile-avatar').textContent = student.avatar;
+                document.getElementById('profile-avatar').style.backgroundColor = `hsl(${student.roll * 36 % 360}, 60%, 50%)`;
+                document.getElementById('profile-name').textContent = student.name;
+                document.getElementById('profile-class').textContent = `Class: ${student.class}`;
+                document.getElementById('profile-roll').textContent = student.roll;
+                document.getElementById('profile-star-count').textContent = student.stars;
+                document.getElementById('profile-notes').value = student.notes;
 
-// Open profile modal
-function openProfileByIdx(i){ const s = state.students[i]; if(!s) return; openProfile(s); }
-function openProfileById(id){ const s = state.students.find(x=>x.id===id); if(!s) return; openProfile(s); }
-function openProfile(s){ ensureStudent(s); const modal=document.getElementById('modal'); document.getElementById('modalTitle').innerText = s.name + ' • Profile';
-  const mk = getMonthKey();
-  let html = <div style='display:flex;gap:14px;align-items:center;flex-wrap:wrap'><div style='width:120px'>${s.photo?<img src="${s.photo}" style="width:120px;height:120px;border-radius:12px;object-fit:cover">:<div style="width:120px;height:120px;border-radius:12px;background:#eef8ff;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:36px">${s.name[0]||'S'}</div>}</div><div style='flex:1'><h2 style='margin:0'>${s.name}</h2><div class='small' style='margin-top:6px'>${s.nick}</div><div style='margin-top:8px'><b>Total Stars:</b> ${s.totalStars} ⭐</div><div><b>This Month:</b> ${s.monthly[mk]||0} ⭐</div><div><b>Current Cycle:</b> ${s.currentRewardStars} / 10 ⭐</div><div style='margin-top:8px'><button class='btn' onclick='markChocolateGiven("${s.id}")'>Chocolate Given</button></div></div></div>;
-  // monthly breakdown
-  html += '<hr style="margin:12px 0"><h3>Monthly Breakdown</h3>';
-  const months = Object.keys(s.monthly).sort().reverse(); if(months.length===0) html += '<div class="small">No monthly data yet</div>'; else{ html += months.map(m=>{ const nm = monthLabel(m); return <div class='month-row'><div class='icon-month'>${nm.icon}</div><div><b>${nm.label}</b><div class='small'>${s.monthly[m]} ⭐</div></div></div> }).join(''); }
-  // badges
-  const isScientist = isInMonthTop(s.id);
-  html += <hr style="margin:12px 0"><div style='display:flex;gap:8px;align-items:center'>${isScientist?'<div style="background:#e8f3ff;padding:8px;border-radius:8px;font-weight:700;color:var(--accent)">🔭 Scientist of the Month</div>':''}<div style="background:#fff6e6;padding:8px;border-radius:8px;font-weight:700;color:#7a5300">📜 Certificate</div></div>;
-  document.getElementById('modalBody').innerHTML = html; modal.style.display='flex'; }
-function closeModal(){ document.getElementById('modal').style.display='none'; }
+                // Render Star History
+                const historyContainer = document.getElementById('star-history-timeline');
+                const studentHistory = State.appState.starHistory
+                    .filter(log => log.studentId === studentId)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-function monthLabel(ym){ const [y,m]=ym.split('-'); const mm=parseInt(m,10); const icons=['📘','📗','📕','🌸','🌞','🎓','🎆','🌻','🍁','🎃','🦃','🎄']; const names=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return { icon: icons[mm-1], label:${names[mm-1]} ${y} } }
-function isInMonthTop(id){ const mk=getMonthKey(); const arr=[...state.students].sort((a,b)=> (b.monthly[mk]||0) - (a.monthly[mk]||0)).slice(0,5); return arr.some(x=>x.id===id); }
+                if (studentHistory.length === 0) {
+                    historyContainer.innerHTML = '<p id="no-history-message">No star history yet.</p>';
+                } else {
+                    historyContainer.innerHTML = studentHistory.map(log => `
+                        <div class="history-item ${log.type}">
+                            <p>
+                                ${log.type === 'add' ? 'Awarded' : 'Removed'} 
+                                <span style="font-weight:700;">${log.stars} Star${log.stars > 1 ? 's' : ''}</span>
+                                ${log.reason ? ` - ${log.reason}` : ''}
+                            </p>
+                            <p class="date">${log.date}</p>
+                        </div>
+                    `).join('');
+                }
 
-// GitHub sync (same as before but fixed regex)
-async function loadFromGitHub(){ const owner=document.getElementById('ghOwner').value.trim(); const repo=document.getElementById('ghRepo').value.trim(); const path=document.getElementById('ghPath').value.trim()||'data.json'; const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('Enter owner, repo and token'); state.config = { ghOwner:owner, ghRepo:repo, ghPath:path, ghToken:token }; saveLocal(); const url=https://api.github.com/repos/${owner}/${repo}/contents/${path}; document.getElementById('syncMsg').innerText='Loading from GitHub...'; try{ const res = await fetch(url, { headers: { Authorization: 'token '+token } }); if(!res.ok) throw new Error('Fetch failed: '+res.status); const data = await res.json(); const content = atob((data.content||'').replace(/\n/g,'')); const parsed = JSON.parse(content||'{}'); state.students = parsed.students||state.students; state.config = parsed.config||state.config; state.students.forEach(ensureStudent); saveLocal(); refreshAll(); document.getElementById('syncMsg').innerText='Loaded from GitHub.'; }catch(e){ document.getElementById('syncMsg').innerText='Load failed: '+e.message; console.error(e); } }
+                openModal('profile-modal');
+            }
+            
+            function openEditModal(studentId) {
+                const student = State.appState.students.find(s => s.id === studentId);
+                if (!student) return;
 
-async function syncToGitHub(){ const owner=document.getElementById('ghOwner').value.trim(); const repo=document.getElementById('ghRepo').value.trim(); const path=document.getElementById('ghPath').value.trim()||'data.json'; const token=document.getElementById('ghToken').value.trim(); if(!owner||!repo||!token) return alert('Enter GitHub config'); const url=https://api.github.com/repos/${owner}/${repo}/contents/${path}; document.getElementById('syncMsg').innerText='Syncing to GitHub...'; const payload = { students: state.students, config:{ ghOwner:owner, ghRepo:repo, ghPath:path } }; const content = btoa(JSON.stringify(payload,null,2)); try{ const getRes = await fetch(url, { headers:{ Authorization: 'token '+token }}); let sha=null; if(getRes.ok){ const js = await getRes.json(); sha = js.sha; } const putRes = await fetch(url, { method:'PUT', headers:{ Authorization: 'token '+token, 'Content-Type':'application/json' }, body: JSON.stringify({ message:'Update data.json from Star Students app', content, sha }) }); if(!putRes.ok) throw new Error('Sync failed: '+putRes.status); const jr = await putRes.json(); state.config={ ghOwner:owner, ghRepo:repo, ghPath:path, ghToken:token }; saveLocal(); document.getElementById('syncMsg').innerText='Synced to GitHub.'; }catch(e){ document.getElementById('syncMsg').innerText='Sync failed: '+e.message; console.error(e); } }
-function navTo(p){ document.querySelectorAll('.nav .tab').forEach(t=>{ t.classList.toggle('active', t.dataset.page===p); }); showPage(p); }
+                document.getElementById('edit-id').value = student.id;
+                document.getElementById('edit-name').value = student.name;
+                document.getElementById('edit-class').value = student.class;
+                document.getElementById('edit-roll').value = student.roll;
 
-// export
-function exportJSON(){ const data=JSON.stringify({ students: state.students, config: state.config }, null, 2); const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='star-students-data.json'; a.click(); URL.revokeObjectURL(url); }
+                closeModal('profile-modal'); 
+                openModal('edit-modal');
+            }
 
-// dark toggle
-document.getElementById('darkToggle').addEventListener('click', ()=>{ document.body.classList.toggle('dark'); });
+            function openStarActionModal(type, studentId) {
+                const student = State.appState.students.find(s => s.id === studentId);
+                if (!student) return;
 
-// init small sample if empty
-if(state.students.length===0){ /* start with an empty list intentionally */ saveLocal(); }
+                const title = type === 'add' ? 'Award Stars' : 'Remove Stars';
+                const info = type === 'add' 
+                    ? `Award stars to ${student.name} for positive actions.`
+                    : `Deduct stars from ${student.name}. Current count: ${student.stars}.`;
+                const btnClass = type === 'add' ? 'success-btn' : 'danger-btn';
+                
+                document.getElementById('star-action-title').textContent = title;
+                document.getElementById('star-action-info').textContent = info;
+                document.getElementById('star-action-type').value = type;
+                document.getElementById('star-action-student-id').value = studentId;
+                document.getElementById('star-submit-btn').className = `btn ${btnClass} large-btn mt-15`;
+                
+                document.getElementById('star-amount').value = '';
+                document.getElementById('star-reason').value = '';
 
-refreshAll();
+                closeModal('profile-modal'); 
+                openModal('star-action-modal');
+            }
 
-</script>
+            function triggerConfetti() {
+                // (Confetti logic remains the same for visual effect)
+                const confettiContainer = document.getElementById('confetti-container');
+                const colors = [
+                    getComputedStyle(document.body).getPropertyValue('--color-success'),
+                    getComputedStyle(document.body).getPropertyValue('--color-warning'),
+                    getComputedStyle(document.body).getPropertyValue('--color-primary'),
+                    getComputedStyle(document.body).getPropertyValue('--color-info')
+                ];
+
+                confettiContainer.innerHTML = '';
+                for (let i = 0; i < 60; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.left = `${50 + (Math.random() - 0.5) * 50}%`;
+                    piece.style.top = `${50 + (Math.random() - 0.5) * 50}%`;
+                    piece.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
+                    piece.style.setProperty('--y', `${(Math.random() - 0.5) * 600}px`);
+                    confettiContainer.appendChild(piece);
+                }
+                setTimeout(() => { confettiContainer.innerHTML = ''; }, 1500); 
+            }
+
+            // Theme UI Logic
+            function updateThemeUI() {
+                const body = document.body;
+                body.setAttribute('data-theme', State.appState.themeMode);
+                body.setAttribute('data-color', State.appState.colorTheme);
+
+                const toggleIcon = State.appState.themeMode === 'dark' ? 'sun' : 'moon';
+                const toggleButton = document.getElementById('dark-mode-toggle');
+                if (toggleButton) {
+                    toggleButton.innerHTML = `<i data-feather="${toggleIcon}"></i>`;
+                    feather.replace();
+                }
+                
+                document.querySelectorAll('.theme-option').forEach(option => {
+                    option.classList.remove('active');
+                    if (option.dataset.color === State.appState.colorTheme) {
+                        option.classList.add('active');
+                    }
+                });
+            }
+
+            return {
+                navigate,
+                showToast,
+                uuid,
+                getTodayDateString,
+                openProfileModal,
+                closeProfileModal: () => { closeModal('profile-modal'); if (window.RenderModule) RenderModule.renderAll(); },
+                openEditModal,
+                closeEditModal: () => { closeModal('edit-modal'); openProfileModal(State.getCurrentStudentId()); },
+                openStarActionModal,
+                closeStarActionModal: () => { closeModal('star-action-modal'); openProfileModal(State.getCurrentStudentId()); },
+                triggerConfetti,
+                updateThemeUI,
+                getSidebar: () => sidebar,
+                getMobileMenuToggle: () => mobileMenuToggle,
+                getChartRefs: () => chartRefs,
+                setChartRefs: (classChart, pieChart) => { chartRefs.starChartClass = classChart; chartRefs.starChartPie = pieChart; }
+            };
+
+        })(StateModule);
+
+
+        // --- 3. Render Module (Handles rendering of lists, boards, and charts) ---
+        const RenderModule = (function(State, UI) {
+
+            function renderStudentCard(student) {
+                return `
+                    <div class="student-card card" data-student-id="${student.id}" title="${student.name} - ${student.stars} Stars">
+                        <div class="avatar" style="background-color: hsl(${student.roll * 36 % 360}, 60%, 50%);">${student.avatar}</div>
+                        <div class="info">
+                            <h4>${student.name}</h4>
+                            <p>Class: ${student.class} | Roll: ${student.roll}</p>
+                        </div>
+                        <div class="stars">
+                            <i data-feather="star" fill="currentColor"></i>
+                            ${student.stars}
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderStudentList() {
+                const container = document.getElementById('student-list-container');
+                const search = document.getElementById('student-search').value.toLowerCase();
+                const classFilter = document.getElementById('class-filter').value;
+                const sortFilter = document.getElementById('sort-filter').value;
+                const noStudentsMessage = document.getElementById('no-students-message');
+                
+                // 1. Prepare Classes for Filter
+                const classes = [...new Set(State.appState.students.map(s => s.class))].sort();
+                const classFilterSelect = document.getElementById('class-filter');
+                classFilterSelect.innerHTML = '<option value="">All Classes</option>' + 
+                    classes.map(c => `<option value="${c}" ${classFilter === c ? 'selected' : ''}>${c}</option>`).join('');
+
+                // 2. Filter Students
+                let filteredStudents = State.appState.students.filter(student => {
+                    const matchesSearch = student.name.toLowerCase().includes(search);
+                    const matchesClass = !classFilter || student.class === classFilter;
+                    return matchesSearch && matchesClass;
+                });
+
+                // 3. Sort Students
+                filteredStudents.sort((a, b) => {
+                    if (sortFilter === 'stars-desc') return b.stars - a.stars;
+                    if (sortFilter === 'name-asc') return a.name.localeCompare(b.name);
+                    if (sortFilter === 'roll-asc') return a.roll - b.roll;
+                    return 0;
+                });
+
+                // 4. Render
+                container.innerHTML = filteredStudents.map(renderStudentCard).join('');
+                noStudentsMessage.style.display = filteredStudents.length === 0 ? 'block' : 'none';
+                feather.replace();
+            }
+            
+            function renderLeaderboard() {
+                const container = document.getElementById('leaderboard-container');
+                const topStudents = [...State.appState.students].sort((a, b) => b.stars - a.stars).slice(0, 10);
+
+                if (topStudents.length === 0) {
+                    container.innerHTML = '<p class="empty-message">No students yet to form a leaderboard.</p>';
+                    return;
+                }
+
+                container.innerHTML = topStudents.map((student, index) => {
+                    const rank = index + 1;
+                    let rankContent;
+                    let colorStyle = '';
+
+                    if (rank === 1) {
+                        rankContent = '<i data-feather="award" class="trophy-icon" style="fill: gold; stroke: gold;"></i>';
+                        colorStyle = 'border-left-color: gold;';
+                    } else if (rank === 2) {
+                        rankContent = '<i data-feather="award" class="trophy-icon" style="fill: silver; stroke: silver;"></i>';
+                        colorStyle = 'border-left-color: silver;';
+                    } else if (rank === 3) {
+                        rankContent = '<i data-feather="award" class="trophy-icon" style="fill: #cd7f32; stroke: #cd7f32;"></i>';
+                        colorStyle = 'border-left-color: #cd7f32;';
+                    } else {
+                        rankContent = `<span class="rank">${rank}</span>`;
+                        colorStyle = `border-left-color: var(--color-primary);`;
+                    }
+
+                    return `
+                        <div class="leaderboard-card" style="${colorStyle}">
+                            ${rankContent}
+                            <div class="avatar" style="background-color: hsl(${student.roll * 36 % 360}, 60%, 50%);">${student.avatar}</div>
+                            <div class="name">${student.name} (${student.class})</div>
+                            <div class="star-count">
+                                ${student.stars}
+                                <i data-feather="star" fill="currentColor"></i>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                feather.replace();
+            }
+
+            function renderAnalytics() {
+                // Check if the current view is active before rendering charts
+                if (!document.getElementById('analytics-view').classList.contains('active')) return;
+
+                const classData = {};
+                State.appState.students.forEach(student => {
+                    if (!classData[student.class]) classData[student.class] = 0;
+                    classData[student.class] += student.stars;
+                });
+                const classLabels = Object.keys(classData).sort();
+                const classStars = classLabels.map(c => classData[c]);
+
+                const top5Students = [...State.appState.students].sort((a, b) => b.stars - a.stars).slice(0, 5);
+                const top5Labels = top5Students.map(s => s.name);
+                const top5Stars = top5Students.map(s => s.stars);
+
+                const chartColor = getComputedStyle(document.body).getPropertyValue('--color-primary').trim();
+                const textColor = getComputedStyle(document.body).getPropertyValue('--text-dark').trim();
+                const mutedColor = getComputedStyle(document.body).getPropertyValue('--text-muted').trim() + '55';
+                const chartBackgrounds = ['#4c6ef5', '#a78bfa', '#2dd4bf', '#f59e0b', '#ef4444'];
+                
+                const { starChartClass, starChartPie } = UI.getChartRefs();
+
+                // Destroy existing charts to prevent rendering issues on theme/data change
+                if (starChartClass) starChartClass.destroy();
+                if (starChartPie) starChartPie.destroy();
+
+                // --- Bar Chart (Total Stars per Class) ---
+                const ctxClass = document.getElementById('star-class-chart').getContext('2d');
+                const newClassChart = new Chart(ctxClass, {
+                    type: 'bar',
+                    data: {
+                        labels: classLabels,
+                        datasets: [{ label: 'Total Stars', data: classStars, backgroundColor: chartColor, borderRadius: 5, }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: textColor, precision: 0 }, grid: { color: mutedColor } },
+                            x: { ticks: { color: textColor }, grid: { color: mutedColor } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+
+                // --- Pie Chart (Top 5 Students) ---
+                const ctxPie = document.getElementById('star-pie-chart').getContext('2d');
+                const newPieChart = new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: top5Labels,
+                        datasets: [{ label: 'Stars', data: top5Stars, backgroundColor: chartBackgrounds.slice(0, top5Students.length), hoverOffset: 4 }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right', labels: { color: textColor } } }
+                    }
+                });
+
+                UI.setChartRefs(newClassChart, newPieChart);
+            }
+            
+            function renderAll() {
+                renderStudentList();
+                renderLeaderboard();
+                UI.updateThemeUI();
+                // Only try to render analytics if that view is active (Chart.js bug fix)
+                if (document.getElementById('analytics-view').classList.contains('active')) {
+                    renderAnalytics();
+                }
+            }
+
+
+            return {
+                renderStudentList,
+                renderLeaderboard,
+                renderAnalytics,
+                renderAll,
+            };
+
+        })(StateModule, UIModule);
+        
+        // Expose RenderModule globally for UIModule/other modules to use (necessary when in single file)
+        window.RenderModule = RenderModule; 
+
+
+        // --- 4. Handlers Module (Handles all form submissions and button clicks) ---
+        const HandlersModule = (function(State, UI, Render) {
+            
+            // --- Helper Functions ---
+            function getInitials(name) {
+                return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            }
+
+            // --- Authentication Handlers ---
+            function handleLogin(e) {
+                e.preventDefault();
+                const passwordInput = document.getElementById('password-input').value;
+                const errorMessage = document.getElementById('login-error');
+
+                if (passwordInput === State.appState.teacherPassword) {
+                    document.body.dataset.loggedIn = 'true';
+                    // FIX: Immediately remove active class to trigger the CSS transition
+                    document.getElementById('login-view').classList.remove('active'); 
+                    UI.navigate('dashboard-view');
+                    errorMessage.textContent = '';
+                    UI.showToast("Login Successful!", 'success', 'check-circle');
+                } else {
+                    errorMessage.textContent = 'Incorrect PIN. Please try again.';
+                    UI.showToast("Incorrect PIN. Please try again.", 'danger', 'x-circle');
+                }
+            }
+            
+            function handleLogout() {
+                document.body.dataset.loggedIn = 'false';
+                UI.navigate('login-view');
+                document.getElementById('password-input').value = '';
+                UI.showToast("Logged out successfully.", 'primary', 'log-out');
+            }
+
+
+            // --- Student Data Handlers ---
+            function handleAddStudent(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('add-name').value.trim();
+                const className = document.getElementById('add-class').value.trim();
+                const roll = parseInt(document.getElementById('add-roll').value);
+                const initialStars = parseInt(document.getElementById('add-stars').value) || 0;
+                const notes = document.getElementById('add-notes').value.trim();
+
+                if (!name || !className || isNaN(roll)) {
+                    UI.showToast("Error: Name, Class, and Roll Number are required.", 'danger', 'alert-triangle');
+                    return;
+                }
+                
+                const newStudent = {
+                    id: UI.uuid(),
+                    name: name,
+                    class: className,
+                    roll: roll,
+                    stars: initialStars,
+                    notes: notes,
+                    avatar: getInitials(name)
+                };
+
+                State.appState.students.push(newStudent);
+                State.saveState();
+                
+                document.getElementById('add-student-form').reset();
+                UI.showToast(`Student ${name} added successfully!`, 'success', 'user-check');
+                UI.navigate('student-list-view');
+            }
+
+            function handleEditStudent(e) {
+                e.preventDefault();
+                const id = document.getElementById('edit-id').value;
+                const name = document.getElementById('edit-name').value.trim();
+                const className = document.getElementById('edit-class').value.trim();
+                const roll = parseInt(document.getElementById('edit-roll').value);
+
+                const student = State.appState.students.find(s => s.id === id);
+                if (student) {
+                    student.name = name;
+                    student.class = className;
+                    student.roll = roll;
+                    student.avatar = getInitials(name);
+
+                    State.saveState();
+                    UI.showToast(`Details for ${name} updated.`, 'success', 'edit');
+                    UI.closeEditModal(); 
+                }
+            }
+
+            function handleDeleteStudent() {
+                const id = State.getCurrentStudentId();
+                const student = State.appState.students.find(s => s.id === id);
+
+                if (confirm(`Are you sure you want to permanently delete the profile for ${student.name}? This cannot be undone.`)) {
+                    State.appState.students = State.appState.students.filter(s => s.id !== id);
+                    State.appState.starHistory = State.appState.starHistory.filter(h => h.studentId !== id);
+                    
+                    State.saveState();
+                    UI.showToast(`${student.name} deleted successfully.`, 'danger', 'trash-2');
+                    UI.closeProfileModal(); // Will navigate away from the profile view and render the list
+                }
+            }
+
+
+            // --- Star Action Handlers ---
+            function handleStarAction(e) {
+                e.preventDefault();
+
+                const id = document.getElementById('star-action-student-id').value;
+                const type = document.getElementById('star-action-type').value;
+                const stars = parseInt(document.getElementById('star-amount').value);
+                const reason = document.getElementById('star-reason').value.trim();
+
+                if (isNaN(stars) || stars <= 0) {
+                    UI.showToast("Error: Please enter a positive number of stars.", 'danger', 'x-circle');
+                    return;
+                }
+                
+                const student = State.appState.students.find(s => s.id === id);
+                if (!student) return;
+
+                if (type === 'add') {
+                    student.stars += stars;
+                    UI.triggerConfetti();
+                    UI.showToast(`+${stars} Star${stars > 1 ? 's' : ''} awarded to ${student.name}!`, 'success', 'star');
+                } else if (type === 'remove') {
+                    if (student.stars < stars) {
+                        UI.showToast(`Error: ${student.name} only has ${student.stars} stars.`, 'danger', 'alert-triangle');
+                        return;
+                    }
+                    student.stars -= stars;
+                    UI.showToast(`-${stars} Star${stars > 1 ? 's' : ''} removed from ${student.name}.`, 'danger', 'minus-circle');
+                }
+
+                // Log history
+                State.appState.starHistory.push({
+                    studentId: student.id,
+                    type: type,
+                    stars: stars,
+                    date: UI.getTodayDateString(),
+                    reason: reason || 'N/A'
+                });
+
+                State.saveState();
+                UI.closeStarActionModal();
+            }
+
+            function handleSaveNotes() {
+                const id = State.getCurrentStudentId();
+                if (!id) return;
+                const student = State.appState.students.find(s => s.id === id);
+                if (student) {
+                    student.notes = document.getElementById('profile-notes').value;
+                    State.saveState();
+                    UI.showToast("Behaviour notes saved.", 'primary', 'save');
+                }
+            }
+
+            // --- Settings & Utility Handlers ---
+            function handleChangePassword(e) {
+                e.preventDefault();
+                const newPassword = document.getElementById('new-password').value;
+
+                if (newPassword.length < 4) {
+                    UI.showToast("PIN must be at least 4 digits long.", 'danger', 'alert-triangle');
+                    return;
+                }
+
+                State.appState.teacherPassword = newPassword;
+                State.saveState();
+                document.getElementById('change-password-form').reset();
+                UI.showToast("Login PIN updated successfully!", 'success', 'lock');
+            }
+
+            function handleFullReset() {
+                if (confirm("DANGER: Are you absolutely sure you want to perform a full app reset? ALL student data and history will be lost.")) {
+                    
+                    State.appState.students = State.DEMO_STUDENTS; 
+                    State.appState.starHistory = [];
+
+                    localStorage.removeItem(State.STATE_KEYS.STUDENTS);
+                    localStorage.removeItem(State.STATE_KEYS.HISTORY);
+
+                    State.saveState();
+                    UI.showToast("Application data successfully reset.", 'warning', 'loader');
+                    UI.navigate('dashboard-view');
+                    Render.renderAll();
+                }
+            }
+
+            function handleExportData() {
+                const data = {
+                    students: State.appState.students,
+                    starHistory: State.appState.starHistory,
+                };
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `StarManager_Data_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                UI.showToast("Data export successful!", 'success', 'download');
+            }
+
+            function handleImportData(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!confirm("WARNING: Importing data will OVERWRITE all current student data and history. Continue?")) {
+                    e.target.value = ''; 
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const importedData = JSON.parse(event.target.result);
+                        if (importedData.students && Array.isArray(importedData.students)) {
+                            State.appState.students = importedData.students;
+                            State.appState.starHistory = Array.isArray(importedData.starHistory) ? importedData.starHistory : [];
+                            
+                            State.saveState();
+                            Render.renderAll();
+                            UI.showToast("Data import successful!", 'success', 'upload-cloud');
+                            UI.navigate('student-list-view');
+                        } else {
+                            throw new Error("Invalid file structure. Missing 'students' array.");
+                        }
+                    } catch (error) {
+                        UI.showToast(`Import Error: ${error.message}`, 'danger', 'alert-triangle');
+                    }
+                    e.target.value = ''; // Reset file input
+                };
+                reader.readAsText(file);
+            }
+
+            // Theme Handlers
+            function handleThemeToggle() {
+                State.appState.themeMode = State.appState.themeMode === 'dark' ? 'light' : 'dark';
+                State.saveState();
+                UI.updateThemeUI();
+                Render.renderAnalytics(); // Re-render charts for theme color update
+                UI.showToast(`Switched to ${State.appState.themeMode.toUpperCase()} Mode.`, 'primary', State.appState.themeMode === 'dark' ? 'moon' : 'sun');
+            }
+
+            function handleColorChange(e) {
+                State.appState.colorTheme = e.currentTarget.dataset.color;
+                State.saveState();
+                UI.updateThemeUI();
+                Render.renderAnalytics(); // Re-render charts for color update
+                UI.showToast(`Theme color updated to ${State.appState.colorTheme.toUpperCase()}.`, 'primary', 'droplet');
+            }
+
+
+            // --- Initialization ---
+            function attachListeners() {
+                // Auth
+                document.getElementById('login-form').addEventListener('submit', handleLogin);
+                document.getElementById('logout-btn').addEventListener('click', handleLogout);
+
+                // Navigation & UI
+                UI.getMobileMenuToggle().addEventListener('click', () => { UI.getSidebar().classList.toggle('active'); });
+                document.querySelectorAll('.sidebar-menu .nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => { e.preventDefault(); UI.navigate(e.currentTarget.dataset.target); });
+                });
+                document.querySelectorAll('.dashboard-grid .dash-card').forEach(card => {
+                    card.addEventListener('click', (e) => { UI.navigate(e.currentTarget.dataset.target); });
+                });
+                
+                // Student List Interaction (Delegated event listener)
+                document.getElementById('student-list-container').addEventListener('click', (e) => {
+                    const card = e.target.closest('.student-card');
+                    if (card) { UI.openProfileModal(card.dataset.studentId); }
+                });
+                
+                // Modals
+                document.getElementById('close-profile-modal').addEventListener('click', UI.closeProfileModal);
+                document.getElementById('close-edit-modal').addEventListener('click', UI.closeEditModal);
+                document.getElementById('close-star-action-modal').addEventListener('click', UI.closeStarActionModal);
+                
+                // Student Actions
+                document.getElementById('save-notes-btn').addEventListener('click', handleSaveNotes);
+                document.getElementById('delete-student-btn').addEventListener('click', handleDeleteStudent);
+                document.getElementById('edit-student-btn').addEventListener('click', () => { UI.openEditModal(State.getCurrentStudentId()); });
+                
+                // Star Actions (via Profile Modal)
+                document.querySelectorAll('.star-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const type = e.currentTarget.dataset.action === 'add-star' ? 'add' : 'remove';
+                        UI.openStarActionModal(type, State.getCurrentStudentId());
+                    });
+                });
+                document.getElementById('star-action-form').addEventListener('submit', handleStarAction);
+
+                // Forms & Filters
+                document.getElementById('add-student-form').addEventListener('submit', handleAddStudent);
+                document.getElementById('edit-student-form').addEventListener('submit', handleEditStudent);
+                document.getElementById('change-password-form').addEventListener('submit', handleChangePassword);
+                document.getElementById('student-search').addEventListener('input', Render.renderStudentList);
+                document.getElementById('class-filter').addEventListener('change', Render.renderStudentList);
+                document.getElementById('sort-filter').addEventListener('change', Render.renderStudentList);
+
+                // Settings & Utility
+                document.getElementById('full-reset-btn').addEventListener('click', handleFullReset);
+                document.getElementById('dark-mode-toggle')?.addEventListener('click', handleThemeToggle);
+                document.querySelectorAll('.theme-option').forEach(option => { option.addEventListener('click', handleColorChange); });
+                document.getElementById('export-data-btn').addEventListener('click', handleExportData);
+                document.getElementById('import-data-trigger').addEventListener('click', () => { document.getElementById('import-file').click(); });
+                document.getElementById('import-file').addEventListener('change', handleImportData);
+            }
+
+            return {
+                attachListeners
+            };
+
+        })(StateModule, UIModule, RenderModule);
+
+
+        // --- 5. App Initialization ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            StateModule.loadState();
+            HandlersModule.attachListeners();
+            UIModule.updateThemeUI();
+
+            // Determine initial view based on login state
+            const isLoggedIn = document.body.dataset.loggedIn === 'true';
+            if (isLoggedIn) {
+                UIModule.navigate('dashboard-view');
+            } else {
+                UIModule.navigate('login-view');
+            }
+            
+            RenderModule.renderAll(); 
+            feather.replace();
+        });
+    </script>
 </body>
 </html>
